@@ -4,7 +4,7 @@
 
 #include "stdio.h"
 #include "stdlib.h"
-#include "sdl.h"
+#include "SDL.h"
 #include "SDL2_gfxPrimitives.h"
 #include "formulas.h"
 #include "time.h"
