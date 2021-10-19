@@ -281,7 +281,7 @@ void robotUpdate(struct SDL_Renderer *renderer, struct Robot *robot)
     SDL_RenderDrawLine(renderer, xBL, yBL, xTL, yTL);
     SDL_RenderDrawLine(renderer, xTL, yTL, xTR, yTR);
 
-    //Front Right Sensor
+    //Back Right Sensor
     int sensor_sensitivity = floor(SENSOR_VISION / 5);
     int i;
     for (i = 0; i < 5; i++)
@@ -362,75 +362,91 @@ void robotMotorMove(struct Robot *robot)
     robot->y = (int)y_offset;
 }
 
-void robotAutoMotorMove(struct Robot *robot, int front_left_sensor, int front_right_sensor, int back_left_sensor, int *right_wall_ptr)
+void robotAutoMotorMove(struct Robot *robot, int front_left_sensor, int front_right_sensor, int back_left_sensor, int *right_wall_ptr, int *calibrated_ptr)
 {
+    // // Find right wall
     int is_right_wall_found = *right_wall_ptr;
+    int is_calibrated = *calibrated_ptr;
 
-    if (!is_right_wall_found && front_right_sensor > 0)
+    // Wall not found, robot not calibrated
+    if (!is_right_wall_found && !is_calibrated)
     {
-        *right_wall_ptr = 1;
-    }
-
-    if ((front_left_sensor == 0) && (front_right_sensor == 0))
-    {
-        if (robot->currentSpeed < 4)
+        if (front_right_sensor > 0)
         {
-            robot->direction = UP;
-            robot->direction = RIGHT;
-            robot->currentSpeed = 4;
-        }
-    }
-
-    if ((front_right_sensor > 0) && (front_left_sensor == 0))
-    {
-        if (front_right_sensor < 3)
-        {
-            robot->currentSpeed = 0;
-            robot->direction = RIGHT;
+            *right_wall_ptr = 1;
         }
         else
         {
-            robot->direction = UP;
-            robot->currentSpeed = 4;
+            if (robot->currentSpeed < 5)
+            {
+                robot->direction = RIGHT;
+                robot->currentSpeed = 5;
+            }
         }
-        printf("Only right sensor > 0\n");
     }
 
-    if (front_left_sensor > 1)
+    // Wall found, robot not calibrated
+    if (is_right_wall_found && !is_calibrated)
     {
-        robot->currentSpeed = 0;
-        printf("Speed cut\n");
+        robot->direction = LEFT;
+        *calibrated_ptr = 1;
+        printf("Calibrated\n");
     }
 
-    if ((front_right_sensor > 0) && (front_left_sensor > 0))
+    // Wall found, robot calibrated
+    if (is_right_wall_found && is_calibrated)
     {
-        // if (back_left_sensor && !is_right_wall_found)
-        // {
-        robot->direction = RIGHT;
-        // }
-        // else
-        // {
-        //     robot->direction = RIGHT;
-        // }
-        printf("Both sensors > 0\n");
-    }
-    else if ((front_right_sensor == 0) && (front_left_sensor == 0))
-    {
-        robot->direction = RIGHT;
-        *right_wall_ptr = 0;
-    }
-    else if ((front_right_sensor == 0) && (front_left_sensor > 0))
-    {
-        printf("Only left sensor > 0\n");
-        if (is_right_wall_found)
+        if (front_left_sensor == 0)
         {
-            robot->direction = RIGHT;
-            printf("Turning left\n");
-        }
-        else
-        {
-            robot->direction = RIGHT;
-            printf("Turning right\n");
+            if (front_right_sensor == 0)
+            {
+
+                if (robot->currentSpeed < 5)
+                {
+                    robot->direction = RIGHT;
+                    robot->currentSpeed = 5;
+                }
+            }
+            else
+            {
+                robot->direction = UP;
+                robot->currentSpeed = 4;
+            }
         }
     }
+
+    // if ((front_left_sensor == 0) && (front_right_sensor == 0))
+    // {
+    //     if (robot->currentSpeed < 5)
+    //     {
+    //         robot->direction = RIGHT;
+    //         robot->currentSpeed = 5;
+    //     }
+    //     printf("Searching\n");
+    // }
+
+    // if ((front_right_sensor > 0) && (front_left_sensor == 0))
+    // {
+    //     if (front_right_sensor < 3)
+    //     {
+    //         robot->direction = RIGHT;
+    //     }
+    //     else
+    //     {
+    //         robot->direction = UP;
+    //     }
+    //     robot->currentSpeed = 4;
+    // }
+    // else if ((front_right_sensor > 0) && (front_left_sensor > 0))
+    // {
+    //     robot->direction = LEFT;
+    // }
+    // else if ((front_right_sensor == 0) && (front_left_sensor == 0))
+    // {
+    //     robot->direction = RIGHT;
+    // }
+    // else if ((front_right_sensor == 0) && (front_left_sensor > 0))
+    // {
+    //     robot->direction = LEFT;
+    // }
 }
