@@ -1,4 +1,5 @@
 #include "robot.h"
+#include <stdbool.h>
 
 void setup_robot(struct Robot *robot){
     robot->x = OVERALL_WINDOW_WIDTH/2-50;
@@ -269,46 +270,81 @@ void robotMotorMove(struct Robot * robot) {
 
 void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_right_sensor) {
 
-    /*if ((front_left_sensor == 0) && (front_right_sensor == 0)) {
-        if (robot->currentSpeed<2)
-            robot->direction = UP;
+    int max_speed = 5;
+
+    int front_min_threshold = 2;
+    int front_max_threshold = 4;
+
+    int right_min_threshold = 3;
+    int right_max_threshold = 4;
+
+    int front = front_left_sensor;
+    int right = front_right_sensor;
+
+    bool bothActivated = (front >= front_min_threshold && right >= right_min_threshold);
+    bool onlyFront = ((front <= front_max_threshold && front >= front_min_threshold )&& (right < right_min_threshold));
+    bool onlyRight = (front < front_min_threshold && right >= right_min_threshold );
+    bool frontTooClose = front >= front_max_threshold;
+    bool rightTooClose = right >= right_max_threshold;
+
+    if(robot->crashed){
+        robot->currentSpeed = 0;
+        return;
     }
-    else if ((robot->currentSpeed>0) && ((front_left_sensor == 1) || (front_right_sensor == 1)) ) {
-        robot->direction = DOWN;
-    }
-    else if ((robot->currentSpeed==0) && ((front_left_sensor == 1) || (front_right_sensor == 1)) ) {
-        robot->direction = RIGHT;
-    }
-    else if ((robot->currentSpeed==0) && ((front_left_sensor == 1) || (front_right_sensor == 0)) ) {
-        robot->direction = RIGHT;
-    }
-    else if ((robot->currentSpeed==0) && ((front_left_sensor == 0) || (front_right_sensor == 1)) ) {
-        robot->direction = RIGHT;
-    }*/
-    if ((front_left_sensor == 0) && (front_right_sensor == 0)) {
-        if (robot->currentSpeed<5){
-            robot->direction = UP;
-            robot->direction = RIGHT;
-            robot->currentSpeed = 5;
+
+    if(bothActivated){
+        if(rightTooClose){
+            robot -> currentSpeed = 0;
+            robot -> direction = LEFT;
+            printf("Both activated \n");
+            return;
+        }
+        else{
+            if(frontTooClose){
+               robot -> currentSpeed = 0;
+                robot -> direction = LEFT;
+                printf("SOMETHING IN FRONT! TURN!!!!\n");
+                return;
+            }
+            else{
+                robot -> currentSpeed = max_speed;
+                robot -> direction = UP;
+                printf("Both activated \n");
+                return;
+            }
         }
 
     }
 
-    if((front_right_sensor > 0) && (front_left_sensor == 0))
-    {
-        robot->direction = UP;
-        robot->currentSpeed = 4;
-    }else if((front_right_sensor > 0) && (front_left_sensor > 0))
-    {
-        robot->direction = LEFT;
-    }
-    else if((front_right_sensor == 0) && (front_left_sensor == 0)){
-        robot->direction = RIGHT;
+    if(onlyRight){
+        if(rightTooClose){
+            robot -> currentSpeed = 0;
+            robot -> direction = LEFT;
+            printf("RIGHT TOO CLOSE!\n");
 
-    }
-    else if((front_right_sensor == 0) && (front_left_sensor > 0)){
-        robot->direction = LEFT;
-
+        }
+        else{
+            robot -> currentSpeed = max_speed;
+            robot -> direction = UP;
+            printf("RIGHT GOOD DISTANCE!\n");
+            return;
+        }
     }
 
+     if(onlyFront){
+        robot -> currentSpeed = 0;
+        robot -> direction = UP;
+        printf("only Front\n");
+        return;
     }
+
+
+
+    if(!onlyFront && !onlyRight){
+        robot -> currentSpeed = max_speed;
+        robot -> direction = UP;
+        robot -> direction = RIGHT;
+        printf("neither\n");
+        return;
+    }
+}
