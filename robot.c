@@ -1,4 +1,5 @@
 #include "robot.h"
+#include "stdbool.h"
 
 void setup_robot(struct Robot *robot)
 {
@@ -368,85 +369,54 @@ void robotAutoMotorMove(struct Robot *robot, int front_left_sensor, int front_ri
     int is_right_wall_found = *right_wall_ptr;
     int is_calibrated = *calibrated_ptr;
 
-    // Wall not found, robot not calibrated
-    if (!is_right_wall_found && !is_calibrated)
+    int max_speed = 5;
+
+    int front_min_threshold = 2;
+    int front_max_threshold = 4;
+
+    int right_min_threshold = 3;
+    int right_max_threshold = 4;
+
+    int front = front_left_sensor;
+    int right = front_right_sensor;
+
+    bool frontActivated = front >= front_min_threshold;
+    bool rightActivated = right >= right_min_threshold;
+
+    bool frontTooClose = front >= front_max_threshold;
+    bool rightTooClose = right >= right_max_threshold;
+
+    bool bothActivated = frontActivated && rightActivated;
+
+    if (robot->crashed)
     {
-        if (front_right_sensor > 0)
+        robot->currentSpeed = 0;
+        return;
+    }
+
+    robot->currentSpeed = 0;
+
+    if (rightActivated)
+    {
+        if (rightTooClose)
         {
-            *right_wall_ptr = 1;
+            robot->direction = LEFT;
         }
         else
         {
-            if (robot->currentSpeed < 5)
-            {
-                robot->direction = RIGHT;
-                robot->currentSpeed = 5;
-            }
+            robot->direction = UP;
+            robot->currentSpeed = max_speed;
         }
     }
+    else
+    {
+        robot->direction = RIGHT;
+        robot->currentSpeed = max_speed;
+    }
 
-    // Wall found, robot not calibrated
-    if (is_right_wall_found && !is_calibrated)
+    if (frontTooClose)
     {
         robot->direction = LEFT;
-        *calibrated_ptr = 1;
-        printf("Calibrated\n");
+        robot->currentSpeed = 0;
     }
-
-    // Wall found, robot calibrated
-    if (is_right_wall_found && is_calibrated)
-    {
-        if (front_left_sensor == 0)
-        {
-            if (front_right_sensor == 0)
-            {
-
-                if (robot->currentSpeed < 5)
-                {
-                    robot->direction = RIGHT;
-                    robot->currentSpeed = 5;
-                }
-            }
-            else
-            {
-                robot->direction = UP;
-                robot->currentSpeed = 4;
-            }
-        }
-    }
-
-    // if ((front_left_sensor == 0) && (front_right_sensor == 0))
-    // {
-    //     if (robot->currentSpeed < 5)
-    //     {
-    //         robot->direction = RIGHT;
-    //         robot->currentSpeed = 5;
-    //     }
-    //     printf("Searching\n");
-    // }
-
-    // if ((front_right_sensor > 0) && (front_left_sensor == 0))
-    // {
-    //     if (front_right_sensor < 3)
-    //     {
-    //         robot->direction = RIGHT;
-    //     }
-    //     else
-    //     {
-    //         robot->direction = UP;
-    //     }
-    //     robot->currentSpeed = 4;
-    // }
-    // else if ((front_right_sensor > 0) && (front_left_sensor > 0))
-    // {
-    //     robot->direction = LEFT;
-    // }
-    // else if ((front_right_sensor == 0) && (front_left_sensor == 0))
-    // {
-    //     robot->direction = RIGHT;
-    // }
-    // else if ((front_right_sensor == 0) && (front_left_sensor > 0))
-    // {
-    //     robot->direction = LEFT;
-    // }
 }
