@@ -4,7 +4,7 @@
 void setup_robot(struct Robot *robot){
     robot->x = OVERALL_WINDOW_WIDTH/2-50;
     robot->y = OVERALL_WINDOW_HEIGHT-50;
-    robot->true_x = OVERALL_WINDOW_WIDTH/2-50;
+    robot->true_x = OVERALL_WINDOW_WIDTH/2-100;
     robot->true_y = OVERALL_WINDOW_HEIGHT-50;
     robot->width = ROBOT_WIDTH;
     robot->height = ROBOT_HEIGHT;
@@ -79,7 +79,7 @@ int checkRobotSensor(int x, int y, int sensorSensitivityLength, struct Wall * wa
     return overlap;
 }
 
-int checkRobotSensorFrontRightAllWalls(struct Robot * robot, struct Wall_collection * head) {
+int checkRobotSensorSideAllWalls(struct Robot * robot, struct Wall_collection * head) {
     struct Wall_collection *ptr, *head_store;
     int i;
     double xDir, yDir;
@@ -112,7 +112,7 @@ int checkRobotSensorFrontRightAllWalls(struct Robot * robot, struct Wall_collect
     return score;
 }
 
-int checkRobotSensorFrontLeftAllWalls(struct Robot * robot, struct Wall_collection * head) {
+int checkRobotSensorFrontRightAllWalls(struct Robot * robot, struct Wall_collection * head) {
     struct Wall_collection *ptr, *head_store;
     int i;
     double xDir, yDir;
@@ -229,10 +229,55 @@ void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot){
         SDL_RenderFillRect(renderer, &rect);
     }
 
+    //Front Left Sensor
+    for (i = 0; i < 5; i++)
+    {
+        xDir = round(robotCentreX+(-ROBOT_WIDTH/2)*cos((robot->angle)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensor_sensitivity*i)*sin((robot->angle)*PI/180));
+        yDir = round(robotCentreY+(-ROBOT_WIDTH/2)*sin((robot->angle)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensor_sensitivity*i)*cos((robot->angle)*PI/180));
+        xTL = (int) xDir;
+        yTL = (int) yDir;
+
+        SDL_Rect rect = {xTL, yTL, 2, sensor_sensitivity};
+        SDL_SetRenderDrawColor(renderer, 80+(20*(5-i)), 80+(20*(5-i)), 80+(20*(5-i)), 255);
+        SDL_RenderDrawRect(renderer, &rect);
+        SDL_RenderFillRect(renderer, &rect);
+    }
+
 
 }
 
+int checkRobotSensorFrontLeftAllWalls(struct Robot * robot, struct Wall_collection * head) {
+    struct Wall_collection *ptr, *head_store;
+    int i;
+    double xDir, yDir;
+    int robotCentreX, robotCentreY, xTL, yTL;
+    int score, hit;
+    int sensorSensitivityLength;
 
+    head_store = head;
+    robotCentreX = robot->x+ROBOT_WIDTH/2;
+    robotCentreY = robot->y+ROBOT_HEIGHT/2;
+    score = 0;
+    sensorSensitivityLength =  floor(SENSOR_VISION/5);
+
+    for (i = 0; i < 5; i++)
+    {
+        ptr = head_store;
+        xDir = round(robotCentreX+(-ROBOT_WIDTH/2)*cos((robot->angle)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*sin((robot->angle)*PI/180));
+        yDir = round(robotCentreY+(-ROBOT_WIDTH/2)*sin((robot->angle)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*cos((robot->angle)*PI/180));
+        xTL = (int) xDir;
+        yTL = (int) yDir;
+        hit = 0;
+
+        while(ptr != NULL) {
+            hit = (hit || checkRobotSensor(xTL, yTL, sensorSensitivityLength, &ptr->wall));
+            ptr = ptr->next;
+        }
+        if (hit)
+            score = i;
+    }
+    return score;
+}
 
 void robotMotorMove(struct Robot * robot) {
     double x_offset, y_offset;
@@ -268,26 +313,21 @@ void robotMotorMove(struct Robot * robot) {
     robot->y = (int) y_offset;
 }
 
-void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_right_sensor) {
+void robotAutoMotorMove(struct Robot *robot, int front_left, int front_right,int side) {
 
     int max_speed = 5;
 
-    int front_min_threshold = 2;
-    int front_max_threshold = 4;
+    int front_right_max_threshold = 2;
+    int front_left_max_threshold = 2;
 
-    int right_min_threshold = 3;
-    int right_max_threshold = 4;
+    int side_min_threshold = 3;
+    int side_max_threshold = 4;
 
-    int front = front_left_sensor;
-    int right = front_right_sensor;
+    bool sideActivated = side >= side_min_threshold;
 
-    bool frontActivated = front >= front_min_threshold;
-    bool rightActivated = right >= right_min_threshold;
-
-    bool frontTooClose = front >= front_max_threshold;
-    bool rightTooClose = right >= right_max_threshold;
-
-    bool bothActivated = frontActivated && rightActivated;
+    bool rightTooClose = front_right >= front_right_max_threshold;
+    bool leftTooClose = front_left >= front_left_max_threshold;
+    bool sideTooClose = side >= side_max_threshold;
 
 
     if(robot->crashed){
@@ -297,8 +337,8 @@ void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_r
 
     robot->currentSpeed = 0;
 
-    if(rightActivated){
-        if(rightTooClose){
+    if(sideActivated){
+        if(sideTooClose){
             robot->direction = LEFT;
         }
         else{
@@ -311,12 +351,19 @@ void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_r
         robot->currentSpeed = max_speed;
     }
 
-    if(frontTooClose){
+
+    if(rightTooClose){
         robot->direction = LEFT;
         robot->currentSpeed = 0;
     }
-
+    else if(leftTooClose && (front_left > front_right) && sideActivated){
+        robot->currentSpeed = 1;
     }
+
+
+
+
+}
 
 
 
