@@ -11,22 +11,24 @@
 
 int done = 0;
 
-void maze2(struct Wall_collection *head){
-    insertAndSetFirstWall(head, 1,  OVERALL_WINDOW_WIDTH/2-400, OVERALL_WINDOW_HEIGHT/2+230, 800, 10); //floor
-    insertAndSetFirstWall(head, 2,  OVERALL_WINDOW_WIDTH/2-400, OVERALL_WINDOW_HEIGHT/2-240, 800, 10); //roof
-    insertAndSetFirstWall(head, 3,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2, 10, OVERALL_WINDOW_HEIGHT/2); //first obstacle lower
-    insertAndSetFirstWall(head, 4,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2-300, 10, OVERALL_WINDOW_HEIGHT/2); //first obstacle upper
-    insertAndSetFirstWall(head, 6,  OVERALL_WINDOW_WIDTH/2+50, OVERALL_WINDOW_HEIGHT/2-70, 50, 10); //second obstacle sideways
-    insertAndSetFirstWall(head, 7,  OVERALL_WINDOW_WIDTH/2+50, OVERALL_WINDOW_HEIGHT/2-195, 10, 1000); //second obstacle tall
-    insertAndSetFirstWall(head, 8,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2-300, 10, 100); //third obstacle stub
-    insertAndSetFirstWall(head, 9,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2-150, 10, 90); //third obstacle stub
-    insertAndSetFirstWall(head, 10,  OVERALL_WINDOW_WIDTH/2+150, OVERALL_WINDOW_HEIGHT/2+70, 300, 10); //four obstacle long sideways
-    insertAndSetFirstWall(head, 11,  OVERALL_WINDOW_WIDTH/2+150, OVERALL_WINDOW_HEIGHT/2-230, 10, 300); //four obstacle long tall
-    insertAndSetFirstWall(head, 12,  OVERALL_WINDOW_WIDTH/2+150, OVERALL_WINDOW_HEIGHT/2+130, 10, 100); //four obstacle long from floor
-    insertAndSetFirstWall(head, 13,  OVERALL_WINDOW_WIDTH/2-320, OVERALL_WINDOW_HEIGHT/2-250, 10, OVERALL_WINDOW_HEIGHT/2+250); //backwall
+void maze2(struct Wall_collection **head)
+{
+    insertAndSetFirstWall(head, 1, OVERALL_WINDOW_WIDTH / 2 - 400, OVERALL_WINDOW_HEIGHT / 2 + 230, 800, 10);                              //floor
+    insertAndSetFirstWall(head, 2, OVERALL_WINDOW_WIDTH / 2 - 400, OVERALL_WINDOW_HEIGHT / 2 - 240, 800, 10);                              //roof
+    insertAndSetFirstWall(head, 3, OVERALL_WINDOW_WIDTH / 2, OVERALL_WINDOW_HEIGHT / 2, 10, OVERALL_WINDOW_HEIGHT / 2);                    //first obstacle lower
+    insertAndSetFirstWall(head, 4, OVERALL_WINDOW_WIDTH / 2, OVERALL_WINDOW_HEIGHT / 2 - 300, 10, OVERALL_WINDOW_HEIGHT / 2);              //first obstacle upper
+    insertAndSetFirstWall(head, 6, OVERALL_WINDOW_WIDTH / 2 + 50, OVERALL_WINDOW_HEIGHT / 2 - 70, 50, 10);                                 //second obstacle sideways
+    insertAndSetFirstWall(head, 7, OVERALL_WINDOW_WIDTH / 2 + 50, OVERALL_WINDOW_HEIGHT / 2 - 195, 10, 1000);                              //second obstacle tall
+    insertAndSetFirstWall(head, 8, OVERALL_WINDOW_WIDTH / 2 + 100, OVERALL_WINDOW_HEIGHT / 2 - 300, 10, 100);                              //third obstacle stub
+    insertAndSetFirstWall(head, 9, OVERALL_WINDOW_WIDTH / 2 + 100, OVERALL_WINDOW_HEIGHT / 2 - 150, 10, 90);                               //third obstacle stub
+    insertAndSetFirstWall(head, 10, OVERALL_WINDOW_WIDTH / 2 + 150, OVERALL_WINDOW_HEIGHT / 2 + 70, 300, 10);                              //four obstacle long sideways
+    insertAndSetFirstWall(head, 11, OVERALL_WINDOW_WIDTH / 2 + 150, OVERALL_WINDOW_HEIGHT / 2 - 230, 10, 300);                             //four obstacle long tall
+    insertAndSetFirstWall(head, 12, OVERALL_WINDOW_WIDTH / 2 + 150, OVERALL_WINDOW_HEIGHT / 2 + 130, 10, 100);                             //four obstacle long from floor
+    insertAndSetFirstWall(head, 13, OVERALL_WINDOW_WIDTH / 2 - 320, OVERALL_WINDOW_HEIGHT / 2 - 250, 10, OVERALL_WINDOW_HEIGHT / 2 + 250); //backwall
 }
 
-void maze1(struct Wall_collection *head){
+void maze1(struct Wall_collection **head)
+{
     insertAndSetFirstWall(head, 1, OVERALL_WINDOW_WIDTH / 2, OVERALL_WINDOW_HEIGHT / 2, 10, OVERALL_WINDOW_HEIGHT / 2);
     insertAndSetFirstWall(head, 2, OVERALL_WINDOW_WIDTH / 2 - 100, OVERALL_WINDOW_HEIGHT / 2 + 100, 10, OVERALL_WINDOW_HEIGHT / 2 - 100);
     insertAndSetFirstWall(head, 3, OVERALL_WINDOW_WIDTH / 2 - 250, OVERALL_WINDOW_HEIGHT / 2 + 100, 150, 10);
@@ -41,34 +43,34 @@ void maze1(struct Wall_collection *head){
     insertAndSetFirstWall(head, 12, OVERALL_WINDOW_WIDTH / 2 + 200, OVERALL_WINDOW_HEIGHT / 2 + 100, OVERALL_WINDOW_WIDTH / 2 - 100, 10);
 }
 
-void maze3(struct Wall_collection *head){
-        insertAndSetFirstWall(head, 1,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2+150, 10, OVERALL_WINDOW_HEIGHT/2); //1
-        insertAndSetFirstWall(head, 12,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2+150, OVERALL_WINDOW_WIDTH/2-150, 10);//2
-        insertAndSetFirstWall(head, 12,  OVERALL_WINDOW_WIDTH/2+170, OVERALL_WINDOW_HEIGHT/2+85, 10, OVERALL_WINDOW_HEIGHT/8+15);//3
-        insertAndSetFirstWall(head, 12,  130, OVERALL_WINDOW_HEIGHT/2+85, OVERALL_WINDOW_WIDTH/2+40, 10);//4
-        insertAndSetFirstWall(head, 1,  120, OVERALL_WINDOW_HEIGHT/2-25, 10, OVERALL_WINDOW_HEIGHT/4);//5
-        insertAndSetFirstWall(head, 12,  120, OVERALL_WINDOW_HEIGHT/2-25, 65, 10);//6
-        insertAndSetFirstWall(head, 1,  185, 165, 10, 60);//7
-        insertAndSetFirstWall(head, 12,  185, 165, OVERALL_WINDOW_WIDTH/2-10, 10);//8
-        insertAndSetFirstWall(head, 1,  490, 165, 10,OVERALL_WINDOW_HEIGHT/2-100 );//9
-        insertAndSetFirstWall(head, 12,  490, 300, 150, 10);//10
-        insertAndSetFirstWall(head, 12,  550, 245, 100, 10);//11
-        insertAndSetFirstWall(head, 1,  550, 110, 10,OVERALL_WINDOW_HEIGHT/2-100 );//12
-        insertAndSetFirstWall(head, 12,  360, 110, OVERALL_WINDOW_WIDTH/2-130, 10);//13
-        insertAndSetFirstWall(head, 1,  OVERALL_WINDOW_WIDTH/2+30, 55, 10, 65);//14
-        insertAndSetFirstWall(head, 12,  OVERALL_WINDOW_WIDTH/2-30, 55, 60, 10);//15
-        insertAndSetFirstWall(head, 1,  OVERALL_WINDOW_WIDTH/2-30, 55, 10, 65);//16
-        insertAndSetFirstWall(head, 12,  125, 110, OVERALL_WINDOW_WIDTH/2-150, 10);//17
-        insertAndSetFirstWall(head, 1,  125, 110, 10, 65);//18
-        insertAndSetFirstWall(head, 12,  60, OVERALL_WINDOW_HEIGHT/2-75, 65, 10);//19
-        insertAndSetFirstWall(head, 1,  60, OVERALL_WINDOW_HEIGHT/2-75, 10, OVERALL_WINDOW_HEIGHT/3+75);//20
-        insertAndSetFirstWall(head, 12,  OVERALL_WINDOW_WIDTH/2-250, OVERALL_WINDOW_HEIGHT/2+150, OVERALL_WINDOW_WIDTH/4, 10);//21
-        insertAndSetFirstWall(head, 2,  OVERALL_WINDOW_WIDTH/2-100, OVERALL_WINDOW_HEIGHT/2+150, 10, OVERALL_WINDOW_HEIGHT/2);//22
+void maze3(struct Wall_collection **head)
+{
+    insertAndSetFirstWall(head, 1, OVERALL_WINDOW_WIDTH / 2, OVERALL_WINDOW_HEIGHT / 2 + 150, 10, OVERALL_WINDOW_HEIGHT / 2);            //1
+    insertAndSetFirstWall(head, 12, OVERALL_WINDOW_WIDTH / 2, OVERALL_WINDOW_HEIGHT / 2 + 150, OVERALL_WINDOW_WIDTH / 2 - 150, 10);      //2
+    insertAndSetFirstWall(head, 12, OVERALL_WINDOW_WIDTH / 2 + 170, OVERALL_WINDOW_HEIGHT / 2 + 85, 10, OVERALL_WINDOW_HEIGHT / 8 + 15); //3
+    insertAndSetFirstWall(head, 12, 130, OVERALL_WINDOW_HEIGHT / 2 + 85, OVERALL_WINDOW_WIDTH / 2 + 40, 10);                             //4
+    insertAndSetFirstWall(head, 1, 120, OVERALL_WINDOW_HEIGHT / 2 - 25, 10, OVERALL_WINDOW_HEIGHT / 4);                                  //5
+    insertAndSetFirstWall(head, 12, 120, OVERALL_WINDOW_HEIGHT / 2 - 25, 65, 10);                                                        //6
+    insertAndSetFirstWall(head, 1, 185, 165, 10, 60);                                                                                    //7
+    insertAndSetFirstWall(head, 12, 185, 165, OVERALL_WINDOW_WIDTH / 2 - 10, 10);                                                        //8
+    insertAndSetFirstWall(head, 1, 490, 165, 10, OVERALL_WINDOW_HEIGHT / 2 - 100);                                                       //9
+    insertAndSetFirstWall(head, 12, 490, 300, 150, 10);                                                                                  //10
+    insertAndSetFirstWall(head, 12, 550, 245, 100, 10);                                                                                  //11
+    insertAndSetFirstWall(head, 1, 550, 110, 10, OVERALL_WINDOW_HEIGHT / 2 - 100);                                                       //12
+    insertAndSetFirstWall(head, 12, 360, 110, OVERALL_WINDOW_WIDTH / 2 - 130, 10);                                                       //13
+    insertAndSetFirstWall(head, 1, OVERALL_WINDOW_WIDTH / 2 + 30, 55, 10, 65);                                                           //14
+    insertAndSetFirstWall(head, 12, OVERALL_WINDOW_WIDTH / 2 - 30, 55, 60, 10);                                                          //15
+    insertAndSetFirstWall(head, 1, OVERALL_WINDOW_WIDTH / 2 - 30, 55, 10, 65);                                                           //16
+    insertAndSetFirstWall(head, 12, 125, 110, OVERALL_WINDOW_WIDTH / 2 - 150, 10);                                                       //17
+    insertAndSetFirstWall(head, 1, 125, 110, 10, 65);                                                                                    //18
+    insertAndSetFirstWall(head, 12, 60, OVERALL_WINDOW_HEIGHT / 2 - 75, 65, 10);                                                         //19
+    insertAndSetFirstWall(head, 1, 60, OVERALL_WINDOW_HEIGHT / 2 - 75, 10, OVERALL_WINDOW_HEIGHT / 3 + 75);                              //20
+    insertAndSetFirstWall(head, 12, OVERALL_WINDOW_WIDTH / 2 - 250, OVERALL_WINDOW_HEIGHT / 2 + 150, OVERALL_WINDOW_WIDTH / 4, 10);      //21
+    insertAndSetFirstWall(head, 2, OVERALL_WINDOW_WIDTH / 2 - 100, OVERALL_WINDOW_HEIGHT / 2 + 150, 10, OVERALL_WINDOW_HEIGHT / 2);      //22
 }
 
 void maze4(struct Wall_collection *head)
 {
-
 }
 
 int main(int argc, char *argv[])
@@ -87,14 +89,12 @@ int main(int argc, char *argv[])
 
     struct Robot robot;
     struct Wall_collection *head = NULL;
-    int front_left_sensor, front_right_sensor, back_left_sensor = 0;
+    int front_sensor, side_sensor = 0;
     // clock_t start_time, end_time;
     // int msec;
     struct timeval start_time, end_time;
     gettimeofday(&start_time, 0);
     unsigned long msec;
-    int is_right_wall_found = 0;
-    int is_calibrated = 0;
 
     // SETUP MAZE
     // You can create your own maze here. line of code is adding a wall.
@@ -102,21 +102,7 @@ int main(int argc, char *argv[])
     // Relative positions are used (OVERALL_WINDOW_WIDTH and OVERALL_WINDOW_HEIGHT)
     // But you can use absolute positions. 10 is used as the width, but you can change this.
 
-    maze3(&head);
-
-
-    // insertAndSetFirstWall(&head, 1, OVERALL_WINDOW_WIDTH / 2 - 400, OVERALL_WINDOW_HEIGHT / 2 + 230, 800, 10);                              //floor
-    // insertAndSetFirstWall(&head, 2, OVERALL_WINDOW_WIDTH / 2 - 400, OVERALL_WINDOW_HEIGHT / 2 - 240, 800, 10);                              //roof
-    // insertAndSetFirstWall(&head, 3, OVERALL_WINDOW_WIDTH / 2, OVERALL_WINDOW_HEIGHT / 2, 10, OVERALL_WINDOW_HEIGHT / 2);                    //first obstacle lower
-    // insertAndSetFirstWall(&head, 4, OVERALL_WINDOW_WIDTH / 2, OVERALL_WINDOW_HEIGHT / 2 - 300, 10, OVERALL_WINDOW_HEIGHT / 2);              //first obstacle upper
-    // insertAndSetFirstWall(&head, 6, OVERALL_WINDOW_WIDTH / 2 + 50, OVERALL_WINDOW_HEIGHT / 2 - 70, 50, 10);                                 //second obstacle sideways
-    // insertAndSetFirstWall(&head, 7, OVERALL_WINDOW_WIDTH / 2 + 50, OVERALL_WINDOW_HEIGHT / 2 - 195, 10, 1000);                              //second obstacle tall
-    // insertAndSetFirstWall(&head, 8, OVERALL_WINDOW_WIDTH / 2 + 100, OVERALL_WINDOW_HEIGHT / 2 - 300, 10, 100);                              //third obstacle stub
-    // insertAndSetFirstWall(&head, 9, OVERALL_WINDOW_WIDTH / 2 + 100, OVERALL_WINDOW_HEIGHT / 2 - 150, 10, 90);                               //third obstacle stub
-    // insertAndSetFirstWall(&head, 10, OVERALL_WINDOW_WIDTH / 2 + 150, OVERALL_WINDOW_HEIGHT / 2 + 70, 300, 10);                              //four obstacle long sideways
-    // insertAndSetFirstWall(&head, 11, OVERALL_WINDOW_WIDTH / 2 + 150, OVERALL_WINDOW_HEIGHT / 2 - 230, 10, 300);                             //four obstacle long tall
-    // insertAndSetFirstWall(&head, 12, OVERALL_WINDOW_WIDTH / 2 + 150, OVERALL_WINDOW_HEIGHT / 2 + 130, 10, 100);                             //four obstacle long from floor
-    // insertAndSetFirstWall(&head, 13, OVERALL_WINDOW_WIDTH / 2 - 320, OVERALL_WINDOW_HEIGHT / 2 - 250, 10, OVERALL_WINDOW_HEIGHT / 2 + 250); //backwall
+    maze1(&head);
 
     setup_robot(&robot);
     updateAllWalls(head, renderer);
@@ -129,7 +115,7 @@ int main(int argc, char *argv[])
 
         //Move robot based on user input commands/auto commands
         if (robot.auto_mode == 1)
-            robotAutoMotorMove(&robot, front_left_sensor, front_right_sensor, back_left_sensor, &is_right_wall_found, &is_calibrated);
+            robotAutoMotorMove(&robot, front_sensor, side_sensor);
         robotMotorMove(&robot);
 
         //Check if robot reaches endpoint. and check sensor values
@@ -140,28 +126,21 @@ int main(int argc, char *argv[])
             gettimeofday(&end_time, 0);
             msec = ((end_time.tv_sec - start_time.tv_sec) * 1000) + (end_time.tv_usec - start_time.tv_usec) / 1000;
             robotSuccess(&robot, msec);
-            is_right_wall_found = 0;
         }
         else if (checkRobotHitWalls(&robot, head))
         {
             robotCrash(&robot);
-            is_right_wall_found = 0;
-            is_calibrated = 0;
         }
         //Otherwise compute sensor information
         else
         {
-            front_left_sensor = checkRobotSensorFrontLeftAllWalls(&robot, head);
-            if (front_left_sensor > 0)
-                printf("Getting close on the left. Score = %d\n", front_left_sensor);
+            front_sensor = checkRobotSensorFrontAllWalls(&robot, head);
+            if (front_sensor > 0)
+                printf("Getting close on the left. Score = %d\n", front_sensor);
 
-            back_left_sensor = checkRobotSensorBackLeftAllWalls(&robot, head);
-            if (back_left_sensor > 0)
-                printf("Getting close on the back left. Score = %d\n", back_left_sensor);
-
-            front_right_sensor = checkRobotSensorFrontRightAllWalls(&robot, head);
-            if (front_right_sensor > 0)
-                printf("Getting close on the right. Score = %d\n", front_right_sensor);
+            side_sensor = checkRobotSensorSideAllWalls(&robot, head);
+            if (side_sensor > 0)
+                printf("Getting close on the right. Score = %d\n", side_sensor);
         }
         robotUpdate(renderer, &robot);
         updateAllWalls(head, renderer);
@@ -209,4 +188,3 @@ int main(int argc, char *argv[])
     SDL_DestroyWindow(window);
     printf("DEAD\n");
 }
-
