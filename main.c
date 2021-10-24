@@ -16,7 +16,7 @@ void maze2(struct Wall_collection **head){
     insertAndSetFirstWall(head, 3,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2, 10, OVERALL_WINDOW_HEIGHT/2); //first obstacle lower
     insertAndSetFirstWall(head, 4,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2-300, 10, OVERALL_WINDOW_HEIGHT/2); //first obstacle upper
     insertAndSetFirstWall(head, 6,  OVERALL_WINDOW_WIDTH/2+50, OVERALL_WINDOW_HEIGHT/2-70, 50, 10); //second obstacle sideways
-    insertAndSetFirstWall(head, 7,  OVERALL_WINDOW_WIDTH/2+50, OVERALL_WINDOW_HEIGHT/2-195, 15, 1000); //second obstacle tall
+    insertAndSetFirstWall(head, 7,  OVERALL_WINDOW_WIDTH/2+50, OVERALL_WINDOW_HEIGHT/2-195, 10, 1000); //second obstacle tall
     insertAndSetFirstWall(head, 8,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2-300, 10, 100); //third obstacle stub
     insertAndSetFirstWall(head, 9,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2-150, 10, 90); //third obstacle stub
     insertAndSetFirstWall(head, 10,  OVERALL_WINDOW_WIDTH/2+150, OVERALL_WINDOW_HEIGHT/2+70, 300, 10); //four obstacle long sideways
@@ -115,6 +115,38 @@ void maze4(struct Wall_collection **head){
     insertAndSetFirstWall(head, 18,  OVERALL_WINDOW_WIDTH/1.3, OVERALL_WINDOW_HEIGHT/1.4, 50, 10); //tiny stem horizontal end of vertical
 }
 
+void maze5(struct Wall_collection **head){
+     insertAndSetFirstWall(head, 1,  OVERALL_WINDOW_WIDTH/2 - 200, OVERALL_WINDOW_HEIGHT/2 + 100, 10, 500);
+    insertAndSetFirstWall(head, 2,  OVERALL_WINDOW_WIDTH/2 - 100, OVERALL_WINDOW_HEIGHT/2, 10, OVERALL_WINDOW_HEIGHT/2);
+    insertAndSetFirstWall(head, 3,  OVERALL_WINDOW_WIDTH/2-225, OVERALL_WINDOW_HEIGHT/2, 125, 10);
+    insertAndSetFirstWall(head, 4,  OVERALL_WINDOW_WIDTH/2-300, OVERALL_WINDOW_HEIGHT/2 + 100, 150, 10);
+    insertAndSetFirstWall(head, 5,  OVERALL_WINDOW_WIDTH/2 - 300, OVERALL_WINDOW_HEIGHT/2 - 210, 10, OVERALL_WINDOW_HEIGHT/2 + 75);
+    insertAndSetFirstWall(head, 6,  OVERALL_WINDOW_WIDTH/2-300, OVERALL_WINDOW_HEIGHT/2 - 210, 500, 10);
+    insertAndSetFirstWall(head, 7,  OVERALL_WINDOW_WIDTH/2 - 220, OVERALL_WINDOW_HEIGHT/2 - 210, 10, OVERALL_WINDOW_HEIGHT/2 - 100);
+    insertAndSetFirstWall(head, 8,  OVERALL_WINDOW_WIDTH/2 - 160, OVERALL_WINDOW_HEIGHT/2 - 100, 10, OVERALL_WINDOW_HEIGHT/2 - 175);
+    insertAndSetFirstWall(head, 9,  OVERALL_WINDOW_WIDTH/2 - 100, OVERALL_WINDOW_HEIGHT/2 - 150, 10, OVERALL_WINDOW_HEIGHT/2 + 20);
+    insertAndSetFirstWall(head, 10,  OVERALL_WINDOW_WIDTH/2 + 50, OVERALL_WINDOW_HEIGHT/2 - 210, 10, OVERALL_WINDOW_HEIGHT/2 - 100);
+    insertAndSetFirstWall(head, 11,  OVERALL_WINDOW_WIDTH/2 - 50, OVERALL_WINDOW_HEIGHT/2 - 150, 50, 10);
+    insertAndSetFirstWall(head, 12,  OVERALL_WINDOW_WIDTH/2 + 10, OVERALL_WINDOW_HEIGHT/2 - 75, 50, 10);
+    insertAndSetFirstWall(head, 13,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2 - 150, 10, OVERALL_WINDOW_HEIGHT/2 - 155);
+    insertAndSetFirstWall(head, 12,  OVERALL_WINDOW_WIDTH/2 - 50, OVERALL_WINDOW_HEIGHT/2 - 75, 50, 10);
+    insertAndSetFirstWall(head, 13,  OVERALL_WINDOW_WIDTH/2 - 50, OVERALL_WINDOW_HEIGHT/2 - 75, 10, OVERALL_WINDOW_HEIGHT/2 - 100);
+    insertAndSetFirstWall(head, 12,  OVERALL_WINDOW_WIDTH/2 - 50, OVERALL_WINDOW_HEIGHT/2 + 60, 150, 10);
+    insertAndSetFirstWall(head, 13,  OVERALL_WINDOW_WIDTH/2 - 25, OVERALL_WINDOW_HEIGHT/2 + 125, 10, OVERALL_WINDOW_HEIGHT/2 - 180);
+    insertAndSetFirstWall(head, 13,  OVERALL_WINDOW_WIDTH/2 + 25, OVERALL_WINDOW_HEIGHT/2 + 100, 10, OVERALL_WINDOW_HEIGHT/2 - 220);
+    insertAndSetFirstWall(head, 13,  OVERALL_WINDOW_WIDTH/2 + 25, OVERALL_WINDOW_HEIGHT/2 + 180, 10, OVERALL_WINDOW_HEIGHT/2 - 220);
+    insertAndSetFirstWall(head, 12,  OVERALL_WINDOW_WIDTH/2 - 100, OVERALL_WINDOW_HEIGHT/2 + 230, 450, 10);
+    insertAndSetFirstWall(head, 12,  OVERALL_WINDOW_WIDTH/2 + 200, OVERALL_WINDOW_HEIGHT/2 + 150, 150, 10);
+    insertAndSetFirstWall(head, 13,  OVERALL_WINDOW_WIDTH/2 + 100, OVERALL_WINDOW_HEIGHT/2, 10, OVERALL_WINDOW_HEIGHT/2 - 125);
+    insertAndSetFirstWall(head, 13,  OVERALL_WINDOW_WIDTH/2 + 200, OVERALL_WINDOW_HEIGHT/2 - 210, 10, OVERALL_WINDOW_HEIGHT/2 + 125);
+    insertAndSetFirstWall(head, 13,  OVERALL_WINDOW_WIDTH/2 + 25, OVERALL_WINDOW_HEIGHT/2 - 20, 10, OVERALL_WINDOW_HEIGHT/2 - 200);
+    insertAndSetFirstWall(head, 12,  OVERALL_WINDOW_WIDTH/2 + 125, OVERALL_WINDOW_HEIGHT/2 - 100, 80, 10);
+    insertAndSetFirstWall(head, 12,  OVERALL_WINDOW_WIDTH/2 + 175, OVERALL_WINDOW_HEIGHT/2, 30, 10);
+    insertAndSetFirstWall(head, 12,  OVERALL_WINDOW_WIDTH/2 + 100, OVERALL_WINDOW_HEIGHT/2 + 75, 30, 10);
+    insertAndSetFirstWall(head, 12,  OVERALL_WINDOW_WIDTH/2 + 175, OVERALL_WINDOW_HEIGHT/2 + 150, 30, 10);
+    insertAndSetFirstWall(head, 12,  OVERALL_WINDOW_WIDTH/2 + 110, OVERALL_WINDOW_HEIGHT/2 - 150, 30, 10);
+}
+
 int main(int argc, char *argv[])
 {
     SDL_Window *window;
@@ -141,7 +173,7 @@ int main(int argc, char *argv[])
     // Relative positions are used (OVERALL_WINDOW_WIDTH and OVERALL_WINDOW_HEIGHT)
     // But you can use absolute positions. 10 is used as the width, but you can change this.
 
-    maze4(&head);
+    maze2(&head);
 
 
     setup_robot(&robot);
