@@ -2,12 +2,10 @@
 #include "stdbool.h"
 
 void setup_robot(struct Robot *robot){
-    robot->x = OVERALL_WINDOW_WIDTH/2-50;
     robot->y = OVERALL_WINDOW_HEIGHT-50;
-    //robot->true_x = OVERALL_WINDOW_WIDTH/2-300;
-    //robot->true_y = OVERALL_WINDOW_HEIGHT-50;
-    robot->true_x = 15 + 15;
-    robot->true_y = 170 + 10;
+    robot->true_x = OVERALL_WINDOW_WIDTH/2-10;
+    robot->x = OVERALL_WINDOW_WIDTH/2-50;
+    robot->true_y = OVERALL_WINDOW_HEIGHT/2-10;
     robot->width = ROBOT_WIDTH;
     robot->height = ROBOT_HEIGHT;
     robot->direction = 0;
@@ -385,25 +383,37 @@ void robotAutoMotorMove(struct Robot *robot, int front_left, int front_right,int
         return;
     }
 
-    robot->currentSpeed = 0;
+    //robot->currentSpeed = 0;
+    printf("Speed: ");
+    printf("%d\n",robot->currentSpeed);
 
     if(sideActivated){
         if(sideTooClose){
             robot->direction = LEFT;
         }
         else{
-            robot->direction = UP;
-            robot->currentSpeed = max_speed;
+            //robot->direction = UP;
+            if(robot->currentSpeed < max_speed){
+                robot->currentSpeed += DEFAULT_SPEED_CHANGE;
+            }
         }
     }
     else{
         if(sideMiddleTooClose){
-            robot->direction = UP;
-            robot->currentSpeed = 2;
+            if(robot->currentSpeed > 2){
+                robot->currentSpeed -= DEFAULT_SPEED_CHANGE;
+            }
         }
         else{
             robot->direction = RIGHT;
-            robot->currentSpeed = max_speed;
+            if(robot->currentSpeed > 2){
+                robot->currentSpeed -= DEFAULT_SPEED_CHANGE;
+            }
+            else{
+                if(robot->currentSpeed < max_speed){
+                robot->currentSpeed += DEFAULT_SPEED_CHANGE;
+                }
+            }
         }
 
     }
@@ -411,7 +421,9 @@ void robotAutoMotorMove(struct Robot *robot, int front_left, int front_right,int
 
     if(rightTooClose){
         robot->direction = LEFT;
-        robot->currentSpeed = 0;
+        if(robot->currentSpeed > 0){
+                robot->currentSpeed -= DEFAULT_SPEED_CHANGE;
+        }
     }
 
     if(leftTooClose &&!rightTooClose && sideMiddleTooClose){
