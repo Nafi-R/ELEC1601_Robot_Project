@@ -407,21 +407,23 @@ int main(int argc, char *argv[])
     // Relative positions are used (OVERALL_WINDOW_WIDTH and OVERALL_WINDOW_HEIGHT)
     // But you can use absolute positions. 10 is used as the width, but you can change this.
 
-    maze9(&head);
+    maze1(&head);
 
 
     setup_robot(&robot);
     updateAllWalls(head, renderer);
 
     SDL_Event event;
+    int foundWall = 0;
     while (!done)
     {
         SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
         SDL_RenderClear(renderer);
 
+
         //Move robot based on user input commands/auto commands
         if (robot.auto_mode == 1)
-            robotAutoMotorMove(&robot, front_left_sensor, front_right_sensor, side_front_sensor, side_middle_sensor);
+            foundWall = robotAutoMotorMove(&robot, front_left_sensor, front_right_sensor, side_front_sensor, side_middle_sensor, foundWall);
         robotMotorMove(&robot);
 
         //Check if robot reaches endpoint. and check sensor values

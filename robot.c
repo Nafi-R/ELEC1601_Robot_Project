@@ -4,7 +4,7 @@
 void setup_robot(struct Robot *robot){
     robot->y = OVERALL_WINDOW_HEIGHT-50;
     robot->x = OVERALL_WINDOW_WIDTH/2-50;
-    robot->true_x = 20;
+    robot->true_x = OVERALL_WINDOW_WIDTH/2- 50;
     robot->true_y = OVERALL_WINDOW_HEIGHT-50;
     robot->width = ROBOT_WIDTH;
     robot->height = ROBOT_HEIGHT;
@@ -129,8 +129,8 @@ int checkRobotSensorSideMiddleAllWalls(struct Robot * robot, struct Wall_collect
     for (i = 0; i < 5; i++)
     {
         ptr = head_store;
-        xDir = round(robotCentreX+(ROBOT_WIDTH/2 - 9)*cos((robot->angle - 90)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*sin((robot->angle + 90)*PI/180));
-        yDir = round(robotCentreY+(ROBOT_WIDTH/2 - 9)*sin((robot->angle - 90)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*cos((robot->angle + 90)*PI/180));
+        xDir = round(robotCentreX+(ROBOT_WIDTH/2 - 12)*cos((robot->angle - 90)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*sin((robot->angle + 90)*PI/180));
+        yDir = round(robotCentreY+(ROBOT_WIDTH/2 - 12)*sin((robot->angle - 90)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*cos((robot->angle + 90)*PI/180));
         xTL = (int) xDir;
         yTL = (int) yDir;
         hit = 0;
@@ -251,8 +251,8 @@ void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot){
     //Side Middle Sensor
     for (i = 0; i < 5; i++)
     {
-        xDir = round(robotCentreX+(ROBOT_WIDTH/2-9)*cos((robot->angle -90)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensor_sensitivity*i)*sin((robot->angle + 90)*PI/180));
-        yDir = round(robotCentreY+(ROBOT_WIDTH/2-9)*sin((robot->angle -90)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensor_sensitivity*i)*cos((robot->angle + 90)*PI/180));
+        xDir = round(robotCentreX+(ROBOT_WIDTH/2-12)*cos((robot->angle -90)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensor_sensitivity*i)*sin((robot->angle + 90)*PI/180));
+        yDir = round(robotCentreY+(ROBOT_WIDTH/2-12)*sin((robot->angle -90)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensor_sensitivity*i)*cos((robot->angle + 90)*PI/180));
         xTL = (int) xDir;
         yTL = (int) yDir;
 
@@ -360,21 +360,22 @@ void robotMotorMove(struct Robot * robot) {
     robot->y = (int) y_offset;
 }
 
-void robotAutoMotorMove(struct Robot *robot, int front_left, int front_right,int side_front, int side_middle) {
+int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right,int side_front, int side_middle, int foundWall) {
 
-    int max_speed = 6;
+    int max_speed = 5;
 
     int front_right_max_threshold = 2;
-    int front_left_max_threshold = 2;
+    int front_left_max_threshold = 4;
 
     int side_min_threshold = 3;
-    int side_max_threshold = 4;
+    int side_max_threshold = 3;
 
     bool sideActivated = side_front >= side_min_threshold;
-    bool rightTooClose = front_right >= front_right_max_threshold;
+    bool rightTooClose = front_right > front_right_max_threshold;
     bool leftTooClose = front_left >= front_left_max_threshold;
-    bool sideTooClose = side_front >= side_max_threshold;
-    bool sideMiddleTooClose = side_middle >= side_min_threshold;
+    bool sideTooClose = side_front > side_max_threshold;
+    bool sideMiddleActivated = side_middle >= side_min_threshold;
+    bool sideMiddleTooClose = side_middle > side_max_threshold;
 
 
 
@@ -387,47 +388,52 @@ void robotAutoMotorMove(struct Robot *robot, int front_left, int front_right,int
     printf("Speed: ");
     printf("%d\n",robot->currentSpeed);
 
-    if(sideActivated){
-        if(sideTooClose){
-            robot->direction = LEFT;
-        }
-        else{
-            //robot->direction = UP;
-            if(robot->currentSpeed < max_speed){
-                robot->currentSpeed += DEFAULT_SPEED_CHANGE;
-            }
-        }
-    }
-    else{
-        if(sideMiddleTooClose){
-            if(robot->currentSpeed > 2){
-                robot->currentSpeed -= DEFAULT_SPEED_CHANGE;
-            }
+    if(foundWall == 0){
+        //Wall has not been found;
+        // Move forward and to right
+        if(robot->currentSpeed <= 3){
+            robot->direction = UP;
         }
         else{
             robot->direction = RIGHT;
-            if(robot->currentSpeed > 2){
-                robot->currentSpeed -= DEFAULT_SPEED_CHANGE;
+        }
+
+        //If the wall is found
+        if(front_left > 0 || front_right > 0 || side_front > 0 || side_middle > 0){
+            printf("Wall Found\n");
+            robot->direction = LEFT;
+            return 1;
+        }
+        return 0;
+
+    }
+    else{
+        //Are the sides Activated
+        if(!sideActivated){
+            if(!sideMiddleTooClose){
+                robot->direction = RIGHT;
             }
             else{
-                if(robot->currentSpeed < max_speed){
-                robot->currentSpeed += DEFAULT_SPEED_CHANGE;
-                }
+                if(robot->currentSpeed > 0)robot->direction = DOWN;
+            }
+        }
+        else{
+            if(robot->currentSpeed < max_speed ) robot->direction = UP;
+
+            if(front_left > 0 || front_right > 0){
+                if(robot->currentSpeed > 0)robot->direction = DOWN;
             }
         }
 
-    }
+
+       if(rightTooClose || sideTooClose || sideMiddleTooClose){
+            robot->direction = LEFT;
+       }
 
 
-    if(rightTooClose){
-        robot->direction = LEFT;
-        if(robot->currentSpeed > 1){
-                robot->currentSpeed -= DEFAULT_SPEED_CHANGE;
-        }
-    }
+       printf("final direction: %d\n",robot->direction);
 
-    if(leftTooClose &&!rightTooClose && sideMiddleTooClose){
-        robot->direction = RIGHT;
+        return 1;
     }
 
 
