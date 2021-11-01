@@ -4,12 +4,12 @@
 void setup_robot(struct Robot *robot){
     robot->y = OVERALL_WINDOW_HEIGHT-50;
     robot->x = OVERALL_WINDOW_WIDTH/2-50;
-    robot->true_x = OVERALL_WINDOW_WIDTH/2- 50;
-    robot->true_y = OVERALL_WINDOW_HEIGHT-50;
+    robot->true_x = OVERALL_WINDOW_WIDTH/2- 290;
+    robot->true_y = OVERALL_WINDOW_HEIGHT/2-60;
     robot->width = ROBOT_WIDTH;
     robot->height = ROBOT_HEIGHT;
     robot->direction = 0;
-    robot->angle = 0;
+    robot->angle = 180;
     robot->currentSpeed = 0;
     robot->crashed = 0;
     robot->auto_mode = 0;
@@ -96,8 +96,8 @@ int checkRobotSensorSideFrontAllWalls(struct Robot * robot, struct Wall_collecti
     for (i = 0; i < 5; i++)
     {
         ptr = head_store;
-        xDir = round(robotCentreX+(ROBOT_WIDTH/2)*cos((robot->angle - 90)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*sin((robot->angle + 90)*PI/180));
-        yDir = round(robotCentreY+(ROBOT_WIDTH/2)*sin((robot->angle - 90)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*cos((robot->angle + 90)*PI/180));
+        xDir = round(robotCentreX+(ROBOT_WIDTH/2 - 2)*cos((robot->angle - 90)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*sin((robot->angle + 90)*PI/180));
+        yDir = round(robotCentreY+(ROBOT_WIDTH/2-  2)*sin((robot->angle - 90)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*cos((robot->angle + 90)*PI/180));
         xTL = (int) xDir;
         yTL = (int) yDir;
         hit = 0;
@@ -237,8 +237,8 @@ void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot){
     int i;
     for (i = 0; i < 5; i++)
     {
-        xDir = round(robotCentreX+(ROBOT_WIDTH/2)*cos((robot->angle -90)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensor_sensitivity*i)*sin((robot->angle + 90)*PI/180));
-        yDir = round(robotCentreY+(ROBOT_WIDTH/2)*sin((robot->angle -90)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensor_sensitivity*i)*cos((robot->angle + 90)*PI/180));
+        xDir = round(robotCentreX+(ROBOT_WIDTH/2 - 2)*cos((robot->angle -90)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensor_sensitivity*i)*sin((robot->angle + 90)*PI/180));
+        yDir = round(robotCentreY+(ROBOT_WIDTH/2 - 2)*sin((robot->angle -90)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensor_sensitivity*i)*cos((robot->angle + 90)*PI/180));
         xTL = (int) xDir;
         yTL = (int) yDir;
 
@@ -360,12 +360,12 @@ void robotMotorMove(struct Robot * robot) {
     robot->y = (int) y_offset;
 }
 
-int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right,int side_front, int side_middle, int foundWall) {
+int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right,int side_front, int side_middle, int foundWall, int* angleChangedPtr) {
 
     int max_speed = 5;
 
     int front_right_max_threshold = 2;
-    int front_left_max_threshold = 4;
+    int front_left_max_threshold = 3;
 
     int side_min_threshold = 3;
     int side_max_threshold = 3;
@@ -391,11 +391,14 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right,int 
     if(foundWall == 0){
         //Wall has not been found;
         // Move forward and to right
-        if(robot->currentSpeed <= 3){
+        if(robot->currentSpeed >= 0 && robot->currentSpeed <= 3){
             robot->direction = UP;
         }
         else{
-            robot->direction = RIGHT;
+            if(*angleChangedPtr == 0){
+                robot->direction = RIGHT;
+                *angleChangedPtr = 1;
+            }
         }
 
         //If the wall is found
@@ -410,18 +413,20 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right,int 
     else{
         //Are the sides Activated
         if(!sideActivated){
+            //If the middle is not too close, turn right
             if(!sideMiddleTooClose){
                 robot->direction = RIGHT;
             }
             else{
-                if(robot->currentSpeed > 0)robot->direction = DOWN;
+                if(robot->currentSpeed > 1)robot->currentSpeed -= DEFAULT_SPEED_CHANGE;
             }
         }
         else{
-            if(robot->currentSpeed < max_speed ) robot->direction = UP;
-
-            if(front_left > 0 || front_right > 0){
-                if(robot->currentSpeed > 0)robot->direction = DOWN;
+            if(front_left > 0 || front_right > 1){
+                if(robot->currentSpeed > 1)robot->currentSpeed -= DEFAULT_SPEED_CHANGE;
+            }
+            else{
+                if(robot->currentSpeed < max_speed)robot->currentSpeed += DEFAULT_SPEED_CHANGE;
             }
         }
 
