@@ -31,8 +31,8 @@ int checkRobotSensorSideMiddleAllWalls(struct Robot * robot, struct Wall_collect
 //Visual Display
 void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot);
 
-//Movement
+//Movements
 void robotMotorMove(struct Robot * robot);
-int robotAutoMotorMove(struct Robot * robot, int front_right_sensor ,int front_left_sensor , int side_front_sensor, int side_middle_sensor, int foundWall, int* angleChanged);
+int robotAutoMotorMove(struct Robot * robot, int front_right_sensor ,int front_left_sensor , int side_front_sensor, int side_middle_sensor, int foundWall, int* angle_changed_ptr, int* calibrated_ptr);
 
 #endif // ROBOT_H_INCLUDED
