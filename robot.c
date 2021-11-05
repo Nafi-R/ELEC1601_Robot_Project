@@ -29,6 +29,7 @@ void setup_robot(struct Robot *robot)
     robot->auto_mode = 0;
     **/
 
+    /**
     // Basic maze 2
     robot->x = 620;
     robot->y = 380;
@@ -41,6 +42,7 @@ void setup_robot(struct Robot *robot)
     robot->currentSpeed = 0;
     robot->crashed = 0;
     robot->auto_mode = 0;
+**/
 
     /**
     // Basic maze 3
@@ -67,6 +69,49 @@ void setup_robot(struct Robot *robot)
     robot->height = ROBOT_HEIGHT;
     robot->direction = 0;
     robot->angle = 90;
+    robot->currentSpeed = 0;
+    robot->crashed = 0;
+    robot->auto_mode = 0;
+**/
+
+    // Complex maze 5
+    robot->x = 170;
+    robot->y = 460;
+    robot->true_x = 170;
+    robot->true_y = 460;
+    robot->width = ROBOT_WIDTH;
+    robot->height = ROBOT_HEIGHT;
+    robot->direction = 0;
+    robot->angle = 0;
+    robot->currentSpeed = 0;
+    robot->crashed = 0;
+    robot->auto_mode = 0;
+
+    /**
+    // Complex maze 6
+    robot->x = 620;
+    robot->y = 40;
+    robot->true_x = 620;
+    robot->true_y = 40;
+    robot->width = ROBOT_WIDTH;
+    robot->height = ROBOT_HEIGHT;
+    robot->direction = 0;
+    robot->angle = 270;
+    robot->currentSpeed = 0;
+    robot->crashed = 0;
+    robot->auto_mode = 0;
+    **/
+
+    /**
+    // Complex maze 7
+    robot->x = 640 - 10 - 170;
+    robot->y = 460;
+    robot->true_x = 640 - 10 - 170;
+    robot->true_y = 460;
+    robot->width = ROBOT_WIDTH;
+    robot->height = ROBOT_HEIGHT;
+    robot->direction = 0;
+    robot->angle = 0;
     robot->currentSpeed = 0;
     robot->crashed = 0;
     robot->auto_mode = 0;
@@ -447,7 +492,7 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
     int front_right_max_threshold = 2;
     int front_left_max_threshold = 3;
 
-    int side_min_threshold = 3;
+    int side_min_threshold = 2;
     int side_max_threshold = 3;
 
     bool side_activated = side_front >= side_min_threshold;
@@ -556,7 +601,7 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
         }
         else
         {
-            if (front_left > 0 || front_right > 1)
+            if (front_left > 0 || front_right > 0)
             {
                 if (robot->currentSpeed > 1)
                 {
