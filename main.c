@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include "SDL2_gfxPrimitives.h"
 #include "time.h"
+#include <sys/time.h>
 
 #include "formulas.h"
 #include "wall.h"
@@ -427,8 +428,11 @@ int main(int argc, char *argv[])
     struct Robot robot;
     struct Wall_collection *head = NULL;
     int front_left_sensor, front_right_sensor, side_front_sensor, side_middle_sensor = 0;
-    clock_t start_time, end_time;
-    int msec;
+    // clock_t start_time, end_time;
+    // int msec;
+    struct timeval start_time, end_time;
+    gettimeofday(&start_time, 0);
+    unsigned long msec;
 
     // SETUP MAZE
     // You can create your own maze here. line of code is adding a wall.
@@ -436,27 +440,33 @@ int main(int argc, char *argv[])
     // Relative positions are used (OVERALL_WINDOW_WIDTH and OVERALL_WINDOW_HEIGHT)
     // But you can use absolute positions. 10 is used as the width, but you can change this.
 
-    maze9(&head);
+    maze2(&head);
 
     setup_robot(&robot);
     updateAllWalls(head, renderer);
+    int foundWall = 0;        // check if wall is found at least once
+    int is_angle_changed = 0; // check if robot's angle has been changed at least once
+    int is_calibrated = 0;
 
     SDL_Event event;
     while (!done)
     {
-        SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
+        SDL_SetRenderDrawColor(renderer, 201, 227, 219, 100);
         SDL_RenderClear(renderer);
 
         //Move robot based on user input commands/auto commands
         if (robot.auto_mode == 1)
-            robotAutoMotorMove(&robot, front_left_sensor, front_right_sensor, side_front_sensor, side_middle_sensor);
+            foundWall = robotAutoMotorMove(&robot, front_left_sensor, front_right_sensor, side_front_sensor, side_middle_sensor, foundWall, &is_angle_changed, &is_calibrated);
         robotMotorMove(&robot);
 
         //Check if robot reaches endpoint. and check sensor values
         if (checkRobotReachedEnd(&robot, OVERALL_WINDOW_WIDTH, OVERALL_WINDOW_HEIGHT / 2 + 100, 10, 100))
         {
-            end_time = clock();
-            msec = (end_time - start_time) * 1000 / CLOCKS_PER_SEC;
+            // end_time = clock();
+            // msec = (end_time - start_time) * 1000 / CLOCKS_PER_SEC;
+            // robotSuccess(&robot, msec);
+            gettimeofday(&end_time, 0);
+            msec = ((end_time.tv_sec - start_time.tv_sec) * 1000) + (end_time.tv_usec - start_time.tv_usec) / 1000;
             robotSuccess(&robot, msec);
         }
         else if (checkRobotHitWalls(&robot, head))
@@ -515,7 +525,8 @@ int main(int argc, char *argv[])
             if (state[SDL_SCANCODE_RETURN])
             {
                 robot.auto_mode = 1;
-                start_time = clock();
+                //start_time = clock();
+                gettimeofday(&start_time, 0);
             }
         }
 
