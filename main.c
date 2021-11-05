@@ -491,7 +491,7 @@ int main(int argc, char *argv[])
     // Relative positions are used (OVERALL_WINDOW_WIDTH and OVERALL_WINDOW_HEIGHT)
     // But you can use absolute positions. 10 is used as the width, but you can change this.
 
-    basic_3(&head);
+    basic_1(&head);
 
     setup_robot(&robot);
     updateAllWalls(head, renderer);
@@ -516,19 +516,21 @@ int main(int argc, char *argv[])
         if (checkRobotReachedEnd(&robot, 640, 340, 10, 100))
         {
             **/
-        /**
+
         // Basic maze 2
         if (checkRobotReachedEnd(&robot, 220, 480, 100, 10))
         {
-            **/
-        /**
+
+            /**
         // Basic maze 3
         if (checkRobotReachedEnd(&robot, 0, 340, 10, 100))
         {
             **/
+            /**
         // Basic maze 4
         if (checkRobotReachedEnd(&robot, 640 - 10 - 320, 480, 100, 10))
         {
+            **/
             //if (checkRobotReachedEnd(&robot, OVERALL_WINDOW_WIDTH, OVERALL_WINDOW_HEIGHT / 2 + 100, 10, 100))
 
             // end_time = clock();

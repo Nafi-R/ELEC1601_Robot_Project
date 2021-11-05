@@ -29,7 +29,6 @@ void setup_robot(struct Robot *robot)
     robot->auto_mode = 0;
     **/
 
-    /**
     // Basic maze 2
     robot->x = 620;
     robot->y = 380;
@@ -42,7 +41,6 @@ void setup_robot(struct Robot *robot)
     robot->currentSpeed = 0;
     robot->crashed = 0;
     robot->auto_mode = 0;
-    **/
 
     /**
     // Basic maze 3
@@ -59,6 +57,7 @@ void setup_robot(struct Robot *robot)
     robot->auto_mode = 0;
     **/
 
+    /**
     // Basic maze 4
     robot->x = 0;
     robot->y = 380;
@@ -71,6 +70,7 @@ void setup_robot(struct Robot *robot)
     robot->currentSpeed = 0;
     robot->crashed = 0;
     robot->auto_mode = 0;
+**/
 
     printf("Press arrow keys to move manually, or enter to move automatically\n\n");
 }
@@ -472,16 +472,29 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
     {
         //Wall has not been found;
         // Move forward and to right
-        if (robot->currentSpeed >= 0 && robot->currentSpeed <= 2)
+        // if (robot->currentSpeed >= 0 && robot->currentSpeed <= 2)
+        // {
+        //     robot->direction = UP;
+        // }
+        // else
+        // {
+        //     if (*angle_changed_ptr <= 3)
+        //     {
+        //         robot->direction = RIGHT;
+        //         *angle_changed_ptr += 1;
+        //     }
+        // }
+
+        if (*angle_changed_ptr < 90)
         {
-            robot->direction = UP;
+            robot->direction = RIGHT;
+            *angle_changed_ptr += DEFAULT_ANGLE_CHANGE;
         }
         else
         {
-            if (*angle_changed_ptr <= 3)
+            if (robot->currentSpeed == 0)
             {
-                robot->direction = RIGHT;
-                *angle_changed_ptr += 1;
+                robot->direction = UP;
             }
         }
 
@@ -489,7 +502,7 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
         if (front_left > 2 || front_right > 2 || side_front > 2 || side_middle > 2)
         {
             printf("Wall Found\n");
-            robot->direction = LEFT;
+            // robot->direction = LEFT;
             return 1;
         }
         return 0;
@@ -503,10 +516,17 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
             return 1;
         }
 
-        if (side_middle == 0 || side_front == 0)
+        // if (side_middle == 0 || side_front == 0)
+        // {
+        //     printf("Turning left on line 452\n");
+        //     robot->direction = LEFT;
+        //     return 1;
+        // }
+
+        if (*angle_changed_ptr > 0)
         {
-            printf("Turning left on line 452\n");
             robot->direction = LEFT;
+            *angle_changed_ptr -= DEFAULT_ANGLE_CHANGE;
             return 1;
         }
 
