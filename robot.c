@@ -3,14 +3,71 @@
 
 void setup_robot(struct Robot *robot)
 {
-    robot->x = OVERALL_WINDOW_WIDTH / 2;
-    robot->y = OVERALL_WINDOW_HEIGHT - 50;
-    robot->true_x = OVERALL_WINDOW_WIDTH / 2 - 50;
-    robot->true_y = OVERALL_WINDOW_HEIGHT - 50;
+    // robot->x = OVERALL_WINDOW_WIDTH / 2;
+    // robot->y = OVERALL_WINDOW_HEIGHT - 50;
+    // robot->true_x = OVERALL_WINDOW_WIDTH / 2 - 50;
+    // robot->true_y = OVERALL_WINDOW_HEIGHT - 50;
+    // robot->width = ROBOT_WIDTH;
+    // robot->height = ROBOT_HEIGHT;
+    // robot->direction = 0;
+    // robot->angle = 0;
+    // robot->currentSpeed = 0;
+    // robot->crashed = 0;
+    // robot->auto_mode = 0;
+
+    /** // Basic maze 1
+    robot->x = 270;
+    robot->y = 460;
+    robot->true_x = 270;
+    robot->true_y = 460;
     robot->width = ROBOT_WIDTH;
     robot->height = ROBOT_HEIGHT;
     robot->direction = 0;
     robot->angle = 0;
+    robot->currentSpeed = 0;
+    robot->crashed = 0;
+    robot->auto_mode = 0;
+    **/
+
+    /**
+    // Basic maze 2
+    robot->x = 620;
+    robot->y = 380;
+    robot->true_x = 620;
+    robot->true_y = 380;
+    robot->width = ROBOT_WIDTH;
+    robot->height = ROBOT_HEIGHT;
+    robot->direction = 0;
+    robot->angle = 270;
+    robot->currentSpeed = 0;
+    robot->crashed = 0;
+    robot->auto_mode = 0;
+    **/
+
+    /**
+    // Basic maze 3
+    robot->x = 640 - 10 - 270;
+    robot->y = 460;
+    robot->true_x = 640 - 10 - 270;
+    robot->true_y = 460;
+    robot->width = ROBOT_WIDTH;
+    robot->height = ROBOT_HEIGHT;
+    robot->direction = 0;
+    robot->angle = 0;
+    robot->currentSpeed = 0;
+    robot->crashed = 0;
+    robot->auto_mode = 0;
+    **/
+
+    // Basic maze 4
+    robot->x = 0;
+    robot->y = 380;
+    robot->true_x = 0;
+    robot->true_y = 380;
+    robot->width = ROBOT_WIDTH;
+    robot->height = ROBOT_HEIGHT;
+    robot->direction = 0;
+    robot->angle = 90;
     robot->currentSpeed = 0;
     robot->crashed = 0;
     robot->auto_mode = 0;
@@ -415,16 +472,16 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
     {
         //Wall has not been found;
         // Move forward and to right
-        if (robot->currentSpeed >= 0 && robot->currentSpeed <= 3)
+        if (robot->currentSpeed >= 0 && robot->currentSpeed <= 2)
         {
             robot->direction = UP;
         }
         else
         {
-            if (*angle_changed_ptr == 0)
+            if (*angle_changed_ptr <= 3)
             {
                 robot->direction = RIGHT;
-                *angle_changed_ptr = 1;
+                *angle_changed_ptr += 1;
             }
         }
 
@@ -439,14 +496,14 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
     }
     else if (!is_calibrated)
     {
-        if (robot->currentSpeed > 0)
+        if (robot->currentSpeed > 1)
         {
 
             robot->direction = DOWN;
             return 1;
         }
 
-        if (side_front != side_middle || side_front == 0)
+        if (side_middle == 0 || side_front == 0)
         {
             printf("Turning left on line 452\n");
             robot->direction = LEFT;
@@ -464,12 +521,14 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
             //If the middle is not too close, turn right
             if (!sideMiddleTooClose)
             {
+                printf("Turning right #1\n");
                 robot->direction = RIGHT;
             }
             else
             {
                 if (robot->currentSpeed > 1)
                 {
+                    printf("Slowing down #1\n");
                     robot->direction = DOWN;
                     is_speed_changed = 1;
                 }
@@ -481,6 +540,7 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
             {
                 if (robot->currentSpeed > 1)
                 {
+                    printf("Slowing down #2\n");
                     robot->direction = DOWN;
                     is_speed_changed = 1;
                 }
@@ -489,6 +549,7 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
             {
                 if (robot->currentSpeed < max_speed)
                 {
+                    printf("Speeding up #1\n");
                     robot->direction = UP;
                     is_speed_changed = 1;
                 }
@@ -497,6 +558,7 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
 
         if ((right_too_close || sideTooClose || sideMiddleTooClose) && !is_speed_changed)
         {
+            printf("Turning left #1\n");
             robot->direction = LEFT;
         }
 

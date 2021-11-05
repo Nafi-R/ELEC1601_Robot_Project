@@ -411,6 +411,57 @@ void maze9(struct Wall_collection **head)
     insertAndSetFirstWall(head, 58, 0 + 15, 450 + 10, 610, 10);
 }
 
+void basic_1(struct Wall_collection **head)
+{
+    insertAndSetFirstWall(head, 2, 220, 400, 10, 80);
+    insertAndSetFirstWall(head, 2, 20, 400, 200, 10);
+    insertAndSetFirstWall(head, 2, 20, 50, 10, 350);
+    insertAndSetFirstWall(head, 2, 20, 50, 280, 10);
+    insertAndSetFirstWall(head, 2, 300, 50, 10, 100);
+    insertAndSetFirstWall(head, 2, 300, 150, 110, 10);
+    insertAndSetFirstWall(head, 2, 400, 50, 10, 100);
+    insertAndSetFirstWall(head, 2, 400, 50, 220, 10);
+    insertAndSetFirstWall(head, 2, 620, 50, 10, 290);
+    insertAndSetFirstWall(head, 2, 620, 340, 20, 10);
+
+    insertAndSetFirstWall(head, 1, 320, 300, 10, 180);
+    insertAndSetFirstWall(head, 2, 120, 300, 200, 10);
+    insertAndSetFirstWall(head, 2, 120, 150, 10, 150);
+    insertAndSetFirstWall(head, 2, 120, 150, 80, 10);
+    insertAndSetFirstWall(head, 2, 200, 150, 10, 100);
+    insertAndSetFirstWall(head, 2, 200, 250, 310, 10);
+    insertAndSetFirstWall(head, 2, 500, 150, 10, 100);
+    insertAndSetFirstWall(head, 2, 500, 150, 10, 100);
+    insertAndSetFirstWall(head, 2, 500, 150, 20, 10);
+    insertAndSetFirstWall(head, 2, 520, 150, 10, 290);
+    insertAndSetFirstWall(head, 2, 520, 440, 120, 10);
+}
+
+void basic_3(struct Wall_collection **head)
+{
+    insertAndSetFirstWall(head, 2, 640 - 10 - 220, 400, 10, 80);
+    insertAndSetFirstWall(head, 2, 640 - 200 - 20, 400, 200, 10);
+    insertAndSetFirstWall(head, 2, 640 - 10 - 20, 50, 10, 350);
+    insertAndSetFirstWall(head, 2, 640 - 280 - 20, 50, 280, 10);
+    insertAndSetFirstWall(head, 2, 640 - 10 - 300, 50, 10, 100);
+    insertAndSetFirstWall(head, 2, 640 - 110 - 300, 150, 110, 10);
+    insertAndSetFirstWall(head, 2, 640 - 10 - 400, 50, 10, 100);
+    insertAndSetFirstWall(head, 2, 640 - 400 - 220, 50, 220, 10);
+    insertAndSetFirstWall(head, 2, 640 - 10 - 620, 50, 10, 290);
+    insertAndSetFirstWall(head, 2, 640 - 620 - 20, 340, 20, 10);
+
+    insertAndSetFirstWall(head, 1, 640 - 10 - 320, 300, 10, 180);
+    insertAndSetFirstWall(head, 2, 640 - 200 - 120, 300, 200, 10);
+    insertAndSetFirstWall(head, 2, 640 - 10 - 120, 150, 10, 150);
+    insertAndSetFirstWall(head, 2, 640 - 80 - 120, 150, 80, 10);
+    insertAndSetFirstWall(head, 2, 640 - 10 - 200, 150, 10, 100);
+    insertAndSetFirstWall(head, 2, 640 - 310 - 200, 250, 310, 10);
+    insertAndSetFirstWall(head, 2, 640 - 10 - 500, 150, 10, 100);
+    insertAndSetFirstWall(head, 2, 640 - 20 - 500, 150, 20, 10);
+    insertAndSetFirstWall(head, 2, 640 - 10 - 520, 150, 10, 290);
+    insertAndSetFirstWall(head, 2, 640 - 120 - 520, 440, 120, 10);
+}
+
 int main(int argc, char *argv[])
 {
     SDL_Window *window;
@@ -440,7 +491,7 @@ int main(int argc, char *argv[])
     // Relative positions are used (OVERALL_WINDOW_WIDTH and OVERALL_WINDOW_HEIGHT)
     // But you can use absolute positions. 10 is used as the width, but you can change this.
 
-    maze2(&head);
+    basic_3(&head);
 
     setup_robot(&robot);
     updateAllWalls(head, renderer);
@@ -460,8 +511,26 @@ int main(int argc, char *argv[])
         robotMotorMove(&robot);
 
         //Check if robot reaches endpoint. and check sensor values
-        if (checkRobotReachedEnd(&robot, OVERALL_WINDOW_WIDTH, OVERALL_WINDOW_HEIGHT / 2 + 100, 10, 100))
+        /**
+        // Basic maze 1
+        if (checkRobotReachedEnd(&robot, 640, 340, 10, 100))
         {
+            **/
+        /**
+        // Basic maze 2
+        if (checkRobotReachedEnd(&robot, 220, 480, 100, 10))
+        {
+            **/
+        /**
+        // Basic maze 3
+        if (checkRobotReachedEnd(&robot, 0, 340, 10, 100))
+        {
+            **/
+        // Basic maze 4
+        if (checkRobotReachedEnd(&robot, 640 - 10 - 320, 480, 100, 10))
+        {
+            //if (checkRobotReachedEnd(&robot, OVERALL_WINDOW_WIDTH, OVERALL_WINDOW_HEIGHT / 2 + 100, 10, 100))
+
             // end_time = clock();
             // msec = (end_time - start_time) * 1000 / CLOCKS_PER_SEC;
             // robotSuccess(&robot, msec);
