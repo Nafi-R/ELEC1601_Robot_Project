@@ -463,130 +463,183 @@ void basic_3(struct Wall_collection **head)
     insertAndSetFirstWall(head, 2, 640 - 120 - 520, 440, 120, 10);
 }
 
-void complex_5(struct Wall_collection **head){
- int i;
-    insertAndSetFirstWall(head, 12,  120, 450, 10, 30);
-    insertAndSetFirstWall(head, 12,  220, 450, 10, 30);
-    for (i = 0; i < 100; i++){
-        insertAndSetFirstWall(head, i,  20 + i , 350 + i, 10, 10); //1
-        insertAndSetFirstWall(head, i,  20 +100 + i , 350 + i, 10, 10); //1
+void complex_5(struct Wall_collection **head)
+{
+    int i;
+    insertAndSetFirstWall(head, 12, 120, 450, 10, 30);
+    insertAndSetFirstWall(head, 12, 220, 450, 10, 30);
+    for (i = 0; i < 100; i++)
+    {
+        insertAndSetFirstWall(head, i, 20 + i, 350 + i, 10, 10);       //1
+        insertAndSetFirstWall(head, i, 20 + 100 + i, 350 + i, 10, 10); //1
     }
-    insertAndSetFirstWall(head, 12,  20, 280, 10, 70);
-    insertAndSetFirstWall(head, 12,  120, 280, 10, 70);
-    for (i = 0; i < 180; i++){
-        insertAndSetFirstWall(head, i,  20 +190 - i/2 , 100 + i, 10, 10); //1
+    insertAndSetFirstWall(head, 12, 20, 280, 10, 70);
+    insertAndSetFirstWall(head, 12, 120, 280, 10, 70);
+    for (i = 0; i < 180; i++)
+    {
+        insertAndSetFirstWall(head, i, 20 + 190 - i / 2, 100 + i, 10, 10); //1
     }
-    for (i = 0; i < 105; i++){
-        insertAndSetFirstWall(head, i,  20 +105/2 - i/2 , 175 + i, 10, 10); //1
+    for (i = 0; i < 105; i++)
+    {
+        insertAndSetFirstWall(head, i, 20 + 105 / 2 - i / 2, 175 + i, 10, 10); //1
     }
-    insertAndSetFirstWall(head, 2,  20, 175, 105/2, 10);
-    insertAndSetFirstWall(head, 2,  20, 20, 10, 155);
-    insertAndSetFirstWall(head, 2,  20, 20, 300, 10);
-    insertAndSetFirstWall(head, 2,  320, 20, 10, 60);
-    insertAndSetFirstWall(head, 2,  80, 100, 130, 10);
-    insertAndSetFirstWall(head, 2,  80, 80, 10, 20);
-    insertAndSetFirstWall(head, 2,  80, 80, 160, 10);
+    insertAndSetFirstWall(head, 2, 20, 175, 105 / 2, 10);
+    insertAndSetFirstWall(head, 2, 20, 20, 10, 155);
+    insertAndSetFirstWall(head, 2, 20, 20, 300, 10);
+    insertAndSetFirstWall(head, 2, 320, 20, 10, 60);
+    insertAndSetFirstWall(head, 2, 80, 100, 130, 10);
+    insertAndSetFirstWall(head, 2, 80, 80, 10, 20);
+    insertAndSetFirstWall(head, 2, 80, 80, 160, 10);
 
     double j;
-    for (i = 0; i < 50; i++){
+    for (i = 0; i < 50; i++)
+    {
         j = i;
-        insertAndSetFirstWall(head, i+1,
+        insertAndSetFirstWall(head, i + 1,
                               // the most important bit is below.
                               // increase the 20 for a tighter bend
                               // descrease for a more meandering flow
-                              320 + 30*sin(10*j * M_PI/180),
+                              320 + 30 * sin(10 * j * M_PI / 180),
                               // increase the 5 for a spacier curve
-                              (i * 5)+80,
+                              (i * 5) + 80,
                               10, 10);
     }
-    for (i = 0; i < 75; i++){
+    for (i = 0; i < 75; i++)
+    {
         j = i;
-        insertAndSetFirstWall(head, i+1,
+        insertAndSetFirstWall(head, i + 1,
                               // the most important bit is below.
                               // increase the 20 for a tighter bend
                               // descrease for a more meandering flow
-                              240 + 30*sin(10*j * M_PI/180),
+                              240 + 30 * sin(10 * j * M_PI / 180),
                               // increase the 5 for a spacier curve
-                              (i * 5)+80,
+                              (i * 5) + 80,
                               10, 10);
     }
-    insertAndSetFirstWall(head, 2,  345, 330, 105, 10);
-    insertAndSetFirstWall(head, 2,  450, 190, 10, 150);
-    insertAndSetFirstWall(head, 2,  380, 190, 70, 10);
-    insertAndSetFirstWall(head, 2,  380, 20, 10, 170);
-    insertAndSetFirstWall(head, 2,  380, 20, 260, 10);
+    insertAndSetFirstWall(head, 2, 345, 330, 105, 10);
+    insertAndSetFirstWall(head, 2, 450, 190, 10, 150);
+    insertAndSetFirstWall(head, 2, 380, 190, 70, 10);
+    insertAndSetFirstWall(head, 2, 380, 20, 10, 170);
+    insertAndSetFirstWall(head, 2, 380, 20, 260, 10);
 
-    insertAndSetFirstWall(head, 2,  255, 455, 345, 10);
-    insertAndSetFirstWall(head, 2,  600, 100, 10, 365);
-    insertAndSetFirstWall(head, 2,  530, 100, 70, 10);
-    insertAndSetFirstWall(head, 2,  530, 80, 10, 20);
-    insertAndSetFirstWall(head, 2,  530, 80, 110, 10);
+    insertAndSetFirstWall(head, 2, 255, 455, 345, 10);
+    insertAndSetFirstWall(head, 2, 600, 100, 10, 365);
+    insertAndSetFirstWall(head, 2, 530, 100, 70, 10);
+    insertAndSetFirstWall(head, 2, 530, 80, 10, 20);
+    insertAndSetFirstWall(head, 2, 530, 80, 110, 10);
 }
 
-void complex_7(struct Wall_collection **head){
+void complex_7(struct Wall_collection **head)
+{
     int i;
-    insertAndSetFirstWall(head, 12,  640-10-120, 450, 10, 30);
-    insertAndSetFirstWall(head, 12,  640-10-220, 450, 10, 30);
+    insertAndSetFirstWall(head, 12, 640 - 10 - 120, 450, 10, 30);
+    insertAndSetFirstWall(head, 12, 640 - 10 - 220, 450, 10, 30);
 
-    for (i = 0; i < 100; i++){
-        insertAndSetFirstWall(head, i,  640-10-(20 + i) , 350 + i, 10, 10); //1
-        insertAndSetFirstWall(head, i,  640-10-(20 +100 + i) , 350 + i, 10, 10); //1
+    for (i = 0; i < 100; i++)
+    {
+        insertAndSetFirstWall(head, i, 640 - 10 - (20 + i), 350 + i, 10, 10);       //1
+        insertAndSetFirstWall(head, i, 640 - 10 - (20 + 100 + i), 350 + i, 10, 10); //1
     }
-    insertAndSetFirstWall(head, 12,  640-10-20, 280, 10, 70);
-    insertAndSetFirstWall(head, 12,  640-10-120, 280, 10, 70);
+    insertAndSetFirstWall(head, 12, 640 - 10 - 20, 280, 10, 70);
+    insertAndSetFirstWall(head, 12, 640 - 10 - 120, 280, 10, 70);
 
-    for (i = 0; i < 180; i++){
-        insertAndSetFirstWall(head, i,  640-10-(20 +190 - i/2) , 100 + i, 10, 10); //1
+    for (i = 0; i < 180; i++)
+    {
+        insertAndSetFirstWall(head, i, 640 - 10 - (20 + 190 - i / 2), 100 + i, 10, 10); //1
     }
-    for (i = 0; i < 105; i++){
-        insertAndSetFirstWall(head, i,  640-10-(20 +105/2 - i/2) , 175 + i, 10, 10); //1
+    for (i = 0; i < 105; i++)
+    {
+        insertAndSetFirstWall(head, i, 640 - 10 - (20 + 105 / 2 - i / 2), 175 + i, 10, 10); //1
     }
 
-
-    insertAndSetFirstWall(head, 2,  640-105/2-20, 175, 105/2, 10);
-    insertAndSetFirstWall(head, 2,  640-10-20, 20, 10, 155);
-    insertAndSetFirstWall(head, 2,  640-300-20, 20, 300, 10);
-    insertAndSetFirstWall(head, 2,  640-10-320, 20, 10, 60);
-    insertAndSetFirstWall(head, 2,  640-130-80, 100, 130, 10);
-    insertAndSetFirstWall(head, 2,  640-10-80, 80, 10, 20);
-    insertAndSetFirstWall(head, 2,  640-160-80, 80, 160, 10);
-
+    insertAndSetFirstWall(head, 2, 640 - 105 / 2 - 20, 175, 105 / 2, 10);
+    insertAndSetFirstWall(head, 2, 640 - 10 - 20, 20, 10, 155);
+    insertAndSetFirstWall(head, 2, 640 - 300 - 20, 20, 300, 10);
+    insertAndSetFirstWall(head, 2, 640 - 10 - 320, 20, 10, 60);
+    insertAndSetFirstWall(head, 2, 640 - 130 - 80, 100, 130, 10);
+    insertAndSetFirstWall(head, 2, 640 - 10 - 80, 80, 10, 20);
+    insertAndSetFirstWall(head, 2, 640 - 160 - 80, 80, 160, 10);
 
     double j;
-    for (i = 0; i < 50; i++){
+    for (i = 0; i < 50; i++)
+    {
         j = i;
-        insertAndSetFirstWall(head, i+1,
+        insertAndSetFirstWall(head, i + 1,
                               // the most important bit is below.
                               // increase the 20 for a tighter bend
                               // descrease for a more meandering flow
-                              640-10-(320 + 30*sin(10*j * M_PI/180)),
+                              640 - 10 - (320 + 30 * sin(10 * j * M_PI / 180)),
                               // increase the 5 for a spacier curve
-                              (i * 5)+80,
+                              (i * 5) + 80,
                               10, 10);
     }
-    for (i = 0; i < 75; i++){
+    for (i = 0; i < 75; i++)
+    {
         j = i;
-        insertAndSetFirstWall(head, i+1,
+        insertAndSetFirstWall(head, i + 1,
                               // the most important bit is below.
                               // increase the 20 for a tighter bend
                               // descrease for a more meandering flow
-                              640-10-(240 + 30*sin(10*j * M_PI/180)),
+                              640 - 10 - (240 + 30 * sin(10 * j * M_PI / 180)),
                               // increase the 5 for a spacier curve
-                              (i * 5)+80,
+                              (i * 5) + 80,
                               10, 10);
     }
 
-    insertAndSetFirstWall(head, 2,  640-105-345, 330, 105, 10);
-    insertAndSetFirstWall(head, 2,  640-10-450, 190, 10, 150);
-    insertAndSetFirstWall(head, 2,  640-70-380, 190, 70, 10);
-    insertAndSetFirstWall(head, 2,  640-10-380, 20, 10, 170);
-    insertAndSetFirstWall(head, 2,  640-260-380, 20, 260, 10);
+    insertAndSetFirstWall(head, 2, 640 - 105 - 345, 330, 105, 10);
+    insertAndSetFirstWall(head, 2, 640 - 10 - 450, 190, 10, 150);
+    insertAndSetFirstWall(head, 2, 640 - 70 - 380, 190, 70, 10);
+    insertAndSetFirstWall(head, 2, 640 - 10 - 380, 20, 10, 170);
+    insertAndSetFirstWall(head, 2, 640 - 260 - 380, 20, 260, 10);
 
-    insertAndSetFirstWall(head, 2,  640-345-255, 455, 345, 10);
-    insertAndSetFirstWall(head, 2,  640-10-600, 100, 10, 365);
-    insertAndSetFirstWall(head, 2,  640-70-530, 100, 70, 10);
-    insertAndSetFirstWall(head, 2,  640-10-530, 80, 10, 20);
-    insertAndSetFirstWall(head, 2,  640-110-530, 80, 110, 10);
+    insertAndSetFirstWall(head, 2, 640 - 345 - 255, 455, 345, 10);
+    insertAndSetFirstWall(head, 2, 640 - 10 - 600, 100, 10, 365);
+    insertAndSetFirstWall(head, 2, 640 - 70 - 530, 100, 70, 10);
+    insertAndSetFirstWall(head, 2, 640 - 10 - 530, 80, 10, 20);
+    insertAndSetFirstWall(head, 2, 640 - 110 - 530, 80, 110, 10);
+}
+
+void change_text_color(char chr)
+{
+
+    switch (chr)
+    {
+    case 'R':
+    {
+
+        printf("\033[1;31m");
+        break;
+    }
+    case 'Y':
+    {
+        printf("\033[33;1m");
+        break;
+    }
+    case 'G':
+    {
+        printf("\033[1;32m");
+        break;
+    }
+    default:
+    {
+        printf("\033[0m");
+    }
+    }
+}
+
+char get_color_from_value(int value, int red_limit)
+{
+    if (value >= red_limit)
+    {
+        return 'R';
+    }
+
+    if (value == red_limit)
+    {
+        return 'Y';
+    }
+
+    return 'G';
 }
 
 int main(int argc, char *argv[])
@@ -625,6 +678,7 @@ int main(int argc, char *argv[])
     int foundWall = 0;        // check if wall is found at least once
     int is_angle_changed = 0; // check if robot's angle has been changed at least once
     int is_calibrated = 0;
+    system("color");
 
     SDL_Event event;
     while (!done)
@@ -639,7 +693,6 @@ int main(int argc, char *argv[])
 
         //Check if robot reaches endpoint. and check sensor values
 
-
         //if (checkRobotReachedEnd(&robot, 640, 340, 10, 100)){             // Basic maze 1
         //if (checkRobotReachedEnd(&robot, 220, 480, 100, 10)){             // Basic maze 2
         //if (checkRobotReachedEnd(&robot, 0, 340, 10, 100)){               // Basic maze 3
@@ -647,12 +700,13 @@ int main(int argc, char *argv[])
         //if (checkRobotReachedEnd(&robot, 640, 20, 10, 60)){               // Complex Maze 5
         //if (checkRobotReachedEnd(&robot, 120, 480, 100, 10)){               //Maze 6
         //if (checkRobotReachedEnd(&robot, 0, 20, 10, 60)){                   //Maze 7'
-        if (checkRobotReachedEnd(&robot, 640-10-220, 480, 100, 10)){        //Maze 8
-        //if (checkRobotReachedEnd(&robot, OVERALL_WINDOW_WIDTH,  OVERALL_WINDOW_HEIGHT / 2 + 100, 10, 100))
+        if (checkRobotReachedEnd(&robot, 640 - 10 - 220, 480, 100, 10))
+        { //Maze 8
+            //if (checkRobotReachedEnd(&robot, OVERALL_WINDOW_WIDTH,  OVERALL_WINDOW_HEIGHT / 2 + 100, 10, 100))
 
-        // end_time = clock();
-        // msec = (end_time - start_time) * 1000 / CLOCKS_PER_SEC;
-        // robotSuccess(&robot, msec);
+            // end_time = clock();
+            // msec = (end_time - start_time) * 1000 / CLOCKS_PER_SEC;
+            // robotSuccess(&robot, msec);
             gettimeofday(&end_time, 0);
             msec = ((end_time.tv_sec - start_time.tv_sec) * 1000) + (end_time.tv_usec - start_time.tv_usec) / 1000;
             robotSuccess(&robot, msec);
@@ -664,19 +718,40 @@ int main(int argc, char *argv[])
         {
             front_left_sensor = checkRobotSensorFrontLeftAllWalls(&robot, head);
             if (front_left_sensor > 0)
+            {
+                char color_code = get_color_from_value(front_left_sensor, 2);
+                change_text_color(color_code);
                 printf("Getting close on the front left. Score = %d\n", front_left_sensor);
+                change_text_color('W');
+            }
 
             front_right_sensor = checkRobotSensorFrontRightAllWalls(&robot, head);
             if (front_right_sensor > 0)
+            {
+                char color_code = get_color_from_value(front_right_sensor, 1);
+                change_text_color(color_code);
                 printf("Getting close on the front right. Score = %d\n", front_right_sensor);
+
+                change_text_color('W');
+            }
 
             side_front_sensor = checkRobotSensorSideFrontAllWalls(&robot, head);
             if (side_front_sensor > 0)
+            {
+                char color_code = get_color_from_value(side_front_sensor, 3);
+                change_text_color(color_code);
                 printf("Getting close on the side front. Score = %d\n", side_front_sensor);
+                change_text_color('W');
+            }
 
             side_middle_sensor = checkRobotSensorSideMiddleAllWalls(&robot, head);
             if (side_middle_sensor > 0)
+            {
+                char color_code = get_color_from_value(side_middle_sensor, 3);
+                change_text_color(color_code);
                 printf("Getting close on the side. Score = %d\n", side_middle_sensor);
+                change_text_color('W');
+            }
         }
         robotUpdate(renderer, &robot);
         updateAllWalls(head, renderer);

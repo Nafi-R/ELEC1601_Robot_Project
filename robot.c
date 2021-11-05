@@ -511,9 +511,9 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
     bool side_activated = side_front >= side_min_threshold;
     bool right_too_close = front_right >= front_right_max_threshold;
     bool left_too_close = front_left >= front_left_max_threshold;
-    bool sideTooClose = side_front > side_max_threshold;
-    bool sideMiddleActivated = side_middle >= side_min_threshold;
-    bool sideMiddleTooClose = side_middle > side_max_threshold;
+    bool side_too_close = side_front > side_max_threshold;
+    bool side_middle_activated = side_middle >= side_min_threshold;
+    bool side_middle_too_close = side_middle > side_max_threshold;
 
     if (robot->crashed)
     {
@@ -521,21 +521,22 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
         return 0;
     }
 
-    //robot->currentSpeed = 0;
+    printf("\033[1;34m");
     printf("Speed: ");
+    printf("\033[0m");
     printf("%d\n", robot->currentSpeed);
-    printf("Is calibrated: %d\n", is_calibrated);
 
+    // Test if the robot has seen the wall at least once before
     if (found_wall == 0)
     {
-        //Wall has not been found;
-        // Move forward and to right
+        // Move the robot forward and set the speed to 2
         if (robot->currentSpeed >= 0 && robot->currentSpeed <= 2)
         {
             robot->direction = UP;
         }
         else
         {
+            // Turn the robot 45 degrees to the right
             if (*angle_changed_ptr <= 3)
             {
                 robot->direction = RIGHT;
@@ -546,7 +547,9 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
         //If the wall is found
         if (front_left > 2 || front_right > 2 || side_front > 2 || side_middle > 2)
         {
+            printf("\033[1;35m");
             printf("Wall Found\n");
+            printf("\033[0m");
             robot->direction = LEFT;
             return 1;
         }
@@ -554,6 +557,7 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
     }
     else if (!is_calibrated)
     {
+        // Slow down the robot
         if (robot->currentSpeed > 0)
         {
 
@@ -561,12 +565,16 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
             return 1;
         }
 
+        // Turn left until both right-facing sensors can 'sense' the right-hand wall
         if (side_middle == 0 || side_front == 0)
         {
-            printf("Turning left on line 452\n");
             robot->direction = LEFT;
             return 1;
         }
+
+        printf("\033[1;35m");
+        printf("Calibrated!\n");
+        printf("\033[0m");
 
         *calibrated_ptr = 1;
         return 1;
@@ -577,16 +585,14 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
         if (!side_activated)
         {
             //If the middle is not too close, turn right
-            if (!sideMiddleTooClose)
+            if (!side_middle_too_close)
             {
-                printf("Turning right #1\n");
                 robot->direction = RIGHT;
             }
             else
             {
                 if (robot->currentSpeed > 1)
                 {
-                    printf("Slowing down #1\n");
                     robot->direction = DOWN;
                     is_speed_changed = 1;
                 }
@@ -598,7 +604,6 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
             {
                 if (robot->currentSpeed > 1)
                 {
-                    printf("Slowing down #2\n");
                     robot->direction = DOWN;
                     is_speed_changed = 1;
                 }
@@ -607,21 +612,16 @@ int robotAutoMotorMove(struct Robot *robot, int front_left, int front_right, int
             {
                 if (robot->currentSpeed < max_speed)
                 {
-                    printf("Speeding up #1\n");
                     robot->direction = UP;
                     is_speed_changed = 1;
                 }
             }
         }
 
-        if ((right_too_close || sideTooClose || sideMiddleTooClose)) //&& !is_speed_changed)
+        if ((right_too_close || side_too_close || side_middle_too_close)) //&& !is_speed_changed)
         {
-            printf("Turning left #1\n");
             robot->direction = LEFT;
         }
-
-        printf("final direction: %d\n", robot->direction);
-
         return 1;
     }
 }
