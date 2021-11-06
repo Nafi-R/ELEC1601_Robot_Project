@@ -4,11 +4,11 @@
 #include "SDL2_gfxPrimitives.h"
 #include "time.h"
 #include <sys/time.h>
-#include "math.h"
 
 #include "formulas.h"
 #include "wall.h"
 #include "robot.h"
+#include "math.h"
 
 int done = 0;
 
@@ -599,6 +599,47 @@ void complex_7(struct Wall_collection **head)
     insertAndSetFirstWall(head, 2, 640 - 110 - 530, 80, 110, 10);
 }
 
+void change_text_color(char chr)
+{
+    switch (chr)
+    {
+    case 'R':
+    {
+        printf("\033[1;31m");
+        break;
+    }
+    case 'Y':
+    {
+        printf("\033[1;33m");
+        break;
+    }
+    case 'G':
+    {
+        printf("\033[1;32m");
+        break;
+    }
+    default:
+    {
+        printf("\033[0m");
+    }
+    }
+}
+
+char get_color_from_value(int value, int red_limit)
+{
+    if (value >= red_limit)
+    {
+        return 'R';
+    }
+
+    if (value == red_limit)
+    {
+        return 'Y';
+    }
+
+    return 'G';
+}
+
 int main(int argc, char *argv[])
 {
     SDL_Window *window;
@@ -628,7 +669,7 @@ int main(int argc, char *argv[])
     // Relative positions are used (OVERALL_WINDOW_WIDTH and OVERALL_WINDOW_HEIGHT)
     // But you can use absolute positions. 10 is used as the width, but you can change this.
 
-    complex_5(&head);
+    complex_7(&head);
 
     setup_robot(&robot);
     updateAllWalls(head, renderer);
@@ -648,47 +689,17 @@ int main(int argc, char *argv[])
         robotMotorMove(&robot);
 
         //Check if robot reaches endpoint. and check sensor values
-        /**
-        // Basic maze 1
-        if (checkRobotReachedEnd(&robot, 640, 340, 10, 100))
-        {
-            **/
 
-        /**
-        // Basic maze 2
-        if (checkRobotReachedEnd(&robot, 220, 480, 100, 10))
-        {
-**/
-
-        /**
-        // Basic maze 3
-        if (checkRobotReachedEnd(&robot, 0, 340, 10, 100))
-        {
-            **/
-
-        /**
-        // Basic maze 4
-        if (checkRobotReachedEnd(&robot, 640 - 10 - 320, 480, 100, 10))
-        {
-            **/
-
-        // Complex maze 5
-        if (checkRobotReachedEnd(&robot, 640, 20, 10, 60))
-        {
-
-            /**
-        // Complex maze 6
-        if (checkRobotReachedEnd(&robot, 120, 480, 100, 10))
-        {
-            **/
-
-            /**
-        // Complex maze 7
-        if (checkRobotReachedEnd(&robot, 0, 20, 10, 60))
-        {
-**/
-
-            //if (checkRobotReachedEnd(&robot, OVERALL_WINDOW_WIDTH, OVERALL_WINDOW_HEIGHT / 2 + 100, 10, 100))
+        //if (checkRobotReachedEnd(&robot, 640, 340, 10, 100)){             // Basic maze 1
+        //if (checkRobotReachedEnd(&robot, 220, 480, 100, 10)){             // Basic maze 2
+        //if (checkRobotReachedEnd(&robot, 0, 340, 10, 100)){               // Basic maze 3
+        //if (checkRobotReachedEnd(&robot, 640 - 10 - 320, 480, 100, 10)){   // Basic maze 4
+        //if (checkRobotReachedEnd(&robot, 640, 20, 10, 60)){               // Complex Maze 5
+        //if (checkRobotReachedEnd(&robot, 120, 480, 100, 10)){               //Maze 6
+        //if (checkRobotReachedEnd(&robot, 0, 20, 10, 60)){                   //Maze 7'
+        if (checkRobotReachedEnd(&robot, 640 - 10 - 220, 480, 100, 10))
+        { //Maze 8
+            //if (checkRobotReachedEnd(&robot, OVERALL_WINDOW_WIDTH,  OVERALL_WINDOW_HEIGHT / 2 + 100, 10, 100))
 
             // end_time = clock();
             // msec = (end_time - start_time) * 1000 / CLOCKS_PER_SEC;
@@ -704,19 +715,40 @@ int main(int argc, char *argv[])
         {
             front_left_sensor = checkRobotSensorFrontLeftAllWalls(&robot, head);
             if (front_left_sensor > 0)
+            {
+                char color_code = get_color_from_value(front_left_sensor, 2);
+                change_text_color(color_code);
                 printf("Getting close on the front left. Score = %d\n", front_left_sensor);
+                change_text_color('W');
+            }
 
             front_right_sensor = checkRobotSensorFrontRightAllWalls(&robot, head);
             if (front_right_sensor > 0)
+            {
+                char color_code = get_color_from_value(front_right_sensor, 1);
+                change_text_color(color_code);
                 printf("Getting close on the front right. Score = %d\n", front_right_sensor);
+
+                change_text_color('W');
+            }
 
             side_front_sensor = checkRobotSensorSideFrontAllWalls(&robot, head);
             if (side_front_sensor > 0)
+            {
+                char color_code = get_color_from_value(side_front_sensor, 3);
+                change_text_color(color_code);
                 printf("Getting close on the side front. Score = %d\n", side_front_sensor);
+                change_text_color('W');
+            }
 
             side_middle_sensor = checkRobotSensorSideMiddleAllWalls(&robot, head);
             if (side_middle_sensor > 0)
+            {
+                char color_code = get_color_from_value(side_middle_sensor, 3);
+                change_text_color(color_code);
                 printf("Getting close on the side. Score = %d\n", side_middle_sensor);
+                change_text_color('W');
+            }
         }
         robotUpdate(renderer, &robot);
         updateAllWalls(head, renderer);
